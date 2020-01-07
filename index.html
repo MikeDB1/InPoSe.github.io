@@ -1,0 +1,3612 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
+<title>InPose Sound Synthesiser Controller</title>
+
+<style>
+    .backgnd
+    {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .main
+    {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #404040;
+        /*background-image: url('Music Notes.jpg');*/
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .headbut
+    {
+        width: 58vw;
+        height: 44vw;
+        background-color: #C00000;
+        border: 0.3vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.7vw;
+        vertical-align: text-bottom;
+        margin-top: 0.5vw;
+        margin-bottom: 0.25vw;
+    }
+
+    .exitbut
+    {
+        width: 18vw;
+        height: 3.75vw;
+        background-color: #A00000;
+        border: 0.3vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.7vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+        margin-top: 0.5vw;
+        margin-bottom: 0.25vw;
+    }
+
+    .copybut
+    {
+        width: 18vw;
+        height: 3.75vw;
+        background-color: #A00000;
+        border: 0.3vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.2vw;
+        font-style: italic;
+        opacity: 0;
+        vertical-align: text-bottom;
+        margin-top: 0.5vw;
+        margin-bottom: 0.25vw;
+    }
+
+    .italic
+    {
+        font-size: 1vw;
+        font-style: italic;
+    }
+
+    .helpbut
+    {
+        width: 80vw;
+        height: 3vw;
+        background-color: #600000;
+        border: 0.25vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.4vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+    }
+
+    .contbut
+    {
+        width: 7vw;
+        height: 3vw;
+        background-color: #600000;
+        border: 0.25vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.1vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+    }
+
+    .sidebut
+    {
+        width: 6vw;
+        height: 3vw;
+        background-color: #600000;
+        border: 0.25vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.4vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+    }
+
+    .mainbut
+    {
+        width: 9vw;
+        height: 5vw;
+        border: 0.25vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.4vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+        margin-top: 1vw;
+        margin-bottom: 1vw;
+    }
+
+    .harmbut
+    {
+        width: 9vw;
+        height: 6vw;
+        border: 0.25vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.4vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+        margin-top: 0vw;
+        margin-bottom: 1vw;
+    }
+
+    .databut
+    {
+        width: 9vw;
+        height: 6vw;
+        border: 0.25vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        font-size: 1.4vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+        margin-top: 0vw;
+        margin-bottom: 0vw;
+   }
+
+    .valuebut
+    {
+        width: 7.5vw;
+        height: 5vw;
+        border: 0.25vw solid white;
+        border-bottom-left-radius: 0.5vw;
+        border-bottom-right-radius: 0.5vw;
+        color: red;
+        background-color: #101010;
+        font-size: 1.4vw;
+        opacity: 0;
+        vertical-align: text-bottom;
+        margin-top: -0.2vw;
+        margin-bottom: 1vw;
+        margin-left: 0.75vw;
+        margin-right: 0.75vw;
+    }
+
+    .slider_wrapper
+    {
+        position: relative;
+        top: -1.25vw;
+    }
+
+    .slider_navi
+    {
+        height: 24vw;
+    }
+
+    #slider_place
+    {
+        position: absolute;
+        top: 0vw;
+    }
+
+    .slibut
+    {
+        width: 3vw;
+        height: 100%;
+        border: 0.25vw solid white;
+        opacity: 0;
+        border-bottom-left-radius: 0.5vw;
+        border-bottom-right-radius: 0.5vw;
+        margin-left: 3vw;
+        margin-right: 3vw;
+        background-color: #000000;
+    }
+
+    .slider
+    {
+        display: inline-block;
+        width: 2.2vw;
+        margin-left : 6.8vw;
+        opacity: 0;
+    }
+
+    .slider input
+    {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22vw;
+        height: 1vw;
+        background: rgba(0,0,0,0);
+        outline: none;
+        transform-origin: 11.5vw 11.5vw;
+        transform: rotate(-90deg);
+    }
+
+    .slider input::-webkit-slider-thumb
+    {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 50px;
+        height: 50px;
+        border: 0vw;
+        background-position: center;
+        background: url('slider.jpg');
+        cursor: pointer;
+    }
+
+    .slider input::-moz-range-thumb
+    {
+        width: 50px;
+        height: 50px;
+        display: block;
+        background-position: center;
+        background: url('slider.jpg');
+        cursor: pointer;
+    }
+
+    .graph
+    {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 0vw;
+        width: 100vw;
+        height: 15vw;
+    }
+
+    .graph-content
+    {
+        position: relative;
+        margin: auto;
+        width: 95vw;
+        height: 15.5vw;
+        background-color: #808080;
+        border: 0.3vw solid white;
+        border-radius: 0.5vw;
+        color: white;
+        text-align: center;
+        /*
+        vertical-align: text-top;
+        /*
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        */
+
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    /* Add Animation
+    @-webkit-keyframes animatetop
+    {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+    }
+    */
+    @keyframes animatetop
+    {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+    }
+</style>
+
+
+
+<script>
+    "use strict";
+    const   _SoundGenTypes = ['Sinewave Synth', 'Wavelet Synth', 'Mono Synth', 'Poly Synth', 'Organ', 'Piano', 'Sampler', 'Per- cussion', 
+                              'Strings', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+    
+    // DISPLAY CONSTANTS
+    const _butON        = 'rgb(0, 192, 0)';
+    const _butRED       = '#C00000';
+    const _mainbutOFF   = '#000080';
+    const _harmbutOFF   = '#004080';
+    const _databutOFF   = '#006080';
+
+    const _butONOFF     = [_butRED, _butON];
+    
+    const _MIDINotes    =['C','C#','D','D#','E','F','F#','G','Ab','A','Bb','B'];
+    const _RootNotes    =['C','C# / Db','D','D# / Eb','E','F','F# / Gb','G','G# / Ab','A','A# / Bb','B'];
+
+    const _Overview     = 20;
+    const _Keyboard     = 1;
+    const _SynthParam   = 2;
+    const _Overtones    = 3;
+    const _NoiseGens    = 4;
+    const _LevelEnvelope= 5;
+    const _AM           = 6;
+    const _FM           = 7;
+    const _FreqEnvelope = 8;
+    const _Effects      = 9;
+    const _System       = 10;
+    const _SavePreset   = 21;
+
+
+    const _FundOver     = 4;
+    const _FundOnly     = 5;
+    const _OverSame     = 6;
+    const _OverIter     = 7;
+    const _NoiseADSR    = 8;
+
+
+    const _AttackShapeHelp = 'Vary the Shape of the Attack curve anywhere between a Logarithmic and a Linear curve';
+    const _DecayShapeHelp = 'Vary the Shape of the Decay curve anywhere between a Logarithmic and a Linear curve';
+    const _ReleaseShapeHelp = 'Vary the Shape of the Release curve anywhere between a Logarithmic and a Linear curve';
+    const _DelayHelp = 'Start the Envelope of the Overtones a period of time after that of the Fundamental';
+
+    const _NoiseGensHelp = [' ',' ',' ',
+        'Noise',
+        'Triangle Wave',
+        'Square Wave',
+        'Chirp',
+        'Sinewaves',
+        'Sample',
+        ' ',' '];
+
+    const _LevelEnvelopeHelp = [' ', ' ', ' ', ' ',
+        'Sets the same ADSR Envelope Parameter for Every Tone in the Signal but only for any Fader that is Moved',
+        'Modifies the ADSR Envelope for the Fundamental Frequency of the Signal',
+        'Sets the same ADSR Envelope for every Tone Except the Fundamental but only for any Fader that is Moved',
+        'Set ADSR of Highest Tone and Interpolate ADSR Envelopes for Overtones between the Fundamental and Highest Tone',
+        'Modifies the ADSR Envelope for the Additional Noise part of the Signal ',
+        ' ',
+        'All Overtones now have same ADSR as the Fundamental'];
+
+    const _AMHelp = [' ',
+        'Linear Modulation selected - modulated signal at the extreme goes between zero amplitude and twice amplitude',
+        'Logarithmic Modulation selected - modulated signal level rises and lowers by the same number of dB',
+        ' ',
+        'Sets the same Amplitude Modulation Parameter for Every Tone in the Signal but only for any Fader that is Moved',
+        'Modifies the Amplitude Modulation for the Fundamental Frequency of the Signal',
+        'Sets the same Amplitude Modulation for every Tone Except the Fundamental but only for any Fader that is Moved',
+        'Set Amplitude Mod of Highest Tone and Interpolate AM Values for Overtones between the Fundamental and the Highest Tone',
+        ' ', ' ',
+        'All Overtones now have same Amplitude Modulation Parameters as the Fundamental'];
+
+     const _FMHelp = [' ',
+        'Linear Modulation selected - modulated signal moves back and forward by an equal number of Hz',
+        'Logarithmic Modulation selected - modulated signal moves back and forward by an equal fraction of an octave',
+        ' ',
+        'Sets the same Frequency Modulation Parameter for Every Tone in the Signal but only for any Fader that is moved',~~~
+        'Modifies the Frequency Modulation for the Fundamental Frequency of the Signal',
+        'Sets the same Frequency Modulation for every Tone Except the Fundamental but only for any Fader that is Moved',+
+        'Set Frequency Mod of Highest Tone and Interpolate FM Values for Overtones between the Fundamental and the Highest Tone',
+        ' ', ' ',
+        'All Overtones now have same Frequency Modulation Parameters as the Fundamental'];
+
+    const _FreqOffsetHelp = [' ', ' ', ' ', ' ',
+        'Sets the same Frequency Envelope Parameter for Every Tone in the Signal but only for any Fader that is moved',
+        'Modifies the Frequency Envelope for the Fundamental Frequency of the Signal',
+        'Sets the same Frequency Envelope for every Tone Except the Fundamental but only for any Fader that is Moved',
+        'Set Freq Envelope of Highest Tone and Interpolate Envelopes of Overtones between Fundamental and Highest Tone',
+        ' ', ' ',  ' ',
+        'All Overtones now have same Frequency Envelope Parameter as the Fundamental'];
+
+    const _SystemHelp = [
+        'Press Again to Delete Selected Sound (Does not work for the preloaded system sounds)',
+        'Rename Selected Sound (Does not work for the preloaded system sounds)',
+        ' ',
+        'Save as one of the Live Presets on the Synth Parameters page',
+        ' ',
+        'Select one of the ten Sound Banks, select any Sound Patch stored to try it, then select other pages to Edit it if required',
+        'Select one of the ten Sound Banks to save current Sound Patch if there is room, then click/touch Save Sound Again to Name and Save it',
+        ' ', ' ',
+        'Back Up all Sound Patches to a USB Memory Stick (WILL overwrite files of the same name and Bank on the memory stick)',
+        'Restore all Sound Patches from a USB Memory Stick (Will NOT overwrite files of the same name and Bank in the Synthesiser)',
+        'Recover any of the last 128 sounds you did not save here'];
+
+
+       //           Fund :          16:15       9:8     6:5     5:4     4:3         7:5     3:2     8:5     5:3         16:9        15:8
+    const CoarseAdjust = [
+        0.25,   0.33333,    0.4,    0.45,
+        0.5,    0.53333,    0.5625, 0.6,    0.625,  0.66667,    0.71428,    0.75,   0.8,    0.83333,    0.88889,    0.9375,
+        1,  1,                      1.06667,   1.125,  1.2,    1.25,   1.33333,   1.4,    1.5,    1.6,    1.66667,   1.77778,   1.875,
+        2,  2,                      2.13333,   2.25,   2.4,    2.5,    2.66667, 2.75,
+        3,  3,  3.25,   3.5,    3.75,
+        4,  4,  4.25,   4.5,    4.75,
+        5,  5,  5.25,   5.5,    5.75,
+        6,  6,  6.25,   6.5,    6.75,
+        7,  7,  7.25,   7.5,    7.75,
+        8,  8,  8.25,   8.5,    8.75,
+        9,  9,  9.25,   9.5,    9.75,
+        10, 10, 10.5,   10.5,  10.75,
+        11, 11, 11.5,   11.5,  11.75,
+        12, 12, 12.5,   12.5,  12.75,
+        13, 13, 13.5,   13.5,  13.75,
+        14, 14, 14.5,   14.5,  14.75,
+        15, 15, 15.5,   15.5,  15.75,
+        16, 16, 16.5,   16.5,  16.75,
+        17, 17, 17.5,   17.5,  17.75,
+        18, 18, 18.5,   18.5,  18.75,
+        19, 19, 19.5,   19.5,  19.75,
+        20, 20,
+        21, 21,
+        22, 22,
+        23, 23,
+        24, 24
+    ];
+
+
+
+
+// SYSTEM VARIABLES
+    var Mode                = 0;
+
+    var SoundSaved          = 1;
+    var DeleteType          = 0;
+    var RenameType          = 0;
+    var SaveType            = 0;
+    var SaveDest            = 0;
+
+    var FullScreen          = 0;
+    var Mobile              = 0;
+
+    var Morehelp            = 0;
+
+    var i;
+
+
+
+
+    // Make all the IDs unique so no need to transmit Mode
+    var Dummy               = {id:0, off:0, val:0, en:0, but:'Dummy Channel'};
+
+    var SoundGenType        = {id:1, off:0, val:0, en:1, but:'Sound Generator Type', ov:'Sound Type'};
+    var MIDIChannel         = {id:2, off:0, val:0, en:1, but:'MIDI Listen Channel', ov:'MIDI Chan'};
+    var MIDISplit           = {id:3, off:0, val:0, en:1, but:'Split Keyboard At', ov:'KybdSplit'};
+    var MultiTouch          = {id:4, off:0, val:0, en:1, but:'Double / Multi Touch', ov:'MultiTouch'};
+    var TouchFreq           = {id:5, off:0, val:0, en:1, but:'Touch Sensitivity Frequency', ov:'Touch Freq'};
+    var TouchLevel          = {id:6, off:0, val:0, en:1, but:'Touch Sensitivity Volume', ov:'Touch Vol'};
+    var TouchAttack         = {id:7, off:0, val:0, en:1, but:'Touch Sensitivity Attack', ov:'TouchAttack'};
+    var PitchWheelSens      = {id:8, off:0, val:0, en:1, but:'Pitch Wheel Sensitivity', ov:'Pitch Sens'};
+    var ModWheelTarg        = {id:9, off:0, val:0, en:1, but:'Mod Wheel Target', ov:'Mod Target'};
+    var ModWheelSens        = {id:10, off:0, val:0, en:1, but:'Mod Wheel Sensitivity', ov:'Mod Sens'};
+
+
+    var Tune                = {id:11, off:64, val:64, en:1, but:'Tune<br>A', ov:'Tune A'};
+    var Temperament         = {id:12, off:0, val:0, en:1, but:'Temper ament', ov:'Temp-ment'};
+    var Key                 = {id:13, off:0, val:0, en:1, but:'Root Key', ov:'Root Key'};
+    var AutoChord           = {id:14, off:0, val:0, en:1, but:'Auto Chord', ov:'Auto Chord'};
+    var S15                 = {id:15, off:0, val:0, en:1, but:' ', ov:''};
+    var S16                 = {id:16, off:0, val:0, en:1, but:' ', ov:''};
+    var HeadPhones          = {id:17, off:0, val:0, en:1, but:'Head Phones', ov:'HeadPhones'};
+    var Width               = {id:18, off:64, val:64, en:1, but:'Width', ov:'Width'};
+    var Pan                 = {id:19, off:64, val:64, en:1, but:'Pan', ov:'Pan'};
+    var Volume              = {id:20, off:0, val:100, en:1, but:'Volume', ov:'Volume'};
+
+
+    var HarmonicGen         = {id:200, off:0, coarse : 0, fine : 0, val:1, en:1, but:' ', ov:''};
+    var Overtone1           = {id:201, off:0, coarse : 16, fine : 64, val:114, en:1, but:'Funda mental', ov:'Fundament'};
+    var Overtone2           = {id:202, off:0, coarse : 18, fine : 64, val:0, en:1, but:'Overtone<br>2', ov:'OvT2'};
+    var Overtone3           = {id:203, off:0, coarse : 24, fine : 64, val:0, en:1, but:'Overtone<br>3', ov:'OvT3'};
+    var Overtone4           = {id:204, off:0, coarse : 30, fine : 64, val:0, en:1, but:'Overtone<br>4', ov:'OvT4'};
+    var Overtone5           = {id:205, off:0, coarse : 36, fine : 64, val:0, en:1, but:'Overtone<br>5', ov:'OvT5'};
+    var Overtone6           = {id:206, off:0, coarse : 42, fine : 64, val:0, en:1, but:'Overtone<br>6', ov:'OvT6'};
+    var Overtone7           = {id:207, off:0, coarse : 48, fine : 64, val:0, en:1, but:'Overtone<br>7', ov:'OvT7'};
+    var Overtone8           = {id:208, off:0, coarse : 54, fine : 64, val:0, en:1, but:'Overtone<br>8', ov:'OvT8'};
+    var Overtone9           = {id:209, off:0, coarse : 60, fine : 64, val:0, en:1, but:'Overtone<br>9', ov:'OvT9'};
+    var Overtone10          = {id:210, off:0, coarse : 66, fine : 64, val:0, en:1, but:'Overtone<br>10', ov:'OvT10'};
+    var Overtone11          = {id:211, off:0, coarse : 72, fine : 64, val:0, en:1, but:'Overtone<br>11', ov:'OvT11'};
+    var Overtone12          = {id:212, off:0, coarse : 78, fine : 64, val:0, en:1, but:'Overtone<br>12', ov:'OvT12'};
+    var Overtone13          = {id:213, off:0, coarse : 84, fine : 64, val:0, en:1, but:'Overtone<br>13', ov:'OvT13'};
+    var Overtone14          = {id:214, off:0, coarse : 90, fine : 64, val:0, en:1, but:'Overtone<br>14', ov:'OvT14'};
+    var Overtone15          = {id:215, off:0, coarse : 96, fine : 64, val:0, en:1, but:'Overtone<br>15', ov:'OvT15'};
+    var Overtone16          = {id:216, off:0, coarse : 102, fine : 64, val:0, en:1, but:'Overtone<br>16', ov:'OvT16'};
+    var Overtone17          = {id:217, off:0, coarse : 108, fine : 64, val:0, en:1, but:'Overtone<br>17', ov:'OvT17'};
+    var Overtone18          = {id:218, off:0, coarse : 114, fine : 64, val:0, en:1, but:'Overtone<br>18', ov:'OvT18'};
+    var Overtone19          = {id:219, off:0, coarse : 120, fine : 64, val:0, en:1, but:'Overtone<br>19', ov:'OvT19'};
+
+
+    var Noise1              = {id:31, off:0, val:6, en:1, but:'27.5 Hz', ov:'27.5 Hz'};
+    var Noise2              = {id:32, off:0, val:12, en:1, but:'55 Hz', ov:'55 Hz'};
+    var Noise3              = {id:33, off:0, val:25, en:1, but:'110 Hz', ov:'110 Hz'};
+    var Noise4              = {id:34, off:0, val:50, en:1, but:'220 Hz', ov:'220 Hz'};
+    var Noise5              = {id:35, off:0, val:100, en:1, but:'440 Hz', ov:'440 Hz'};
+    var Noise6              = {id:36, off:0, val:50, en:1, but:'880 Hz', ov:'880 Hz'};
+    var Noise7              = {id:37, off:0, val:25, en:1, but:'1760 Hz', ov:'1760 Hz'};
+    var Noise8              = {id:38, off:0, val:12, en:1, but:'3520 Hz', ov:'3520 Hz'};
+    var Noise9              = {id:39, off:0, val:6, en:1, but:'7040 Hz', ov:'7040 Hz'};
+    var Noise10             = {id:40, off:0, val:3, en:1, but:'14080 Hz', ov:'14080 Hz'};
+
+
+    var Attack              = {id:41, off:0, val:10, en:1, but:'Attack', ov:'Attack'};
+    var Decay               = {id:42, off:0, val:20, en:1, but:'Decay', ov:'Decay'};
+    var SustainLevel        = {id:43, off:64, val:64, en:1, but:'Sustain Level', ov:'Sust Lev'};
+    var SustainDroop        = {id:44, off:0, val:127, en:1, but:'Sustain Droop', ov:'Sust Droop'};
+    var SustainDroopLevel   = {id:45, off:127, val:127, en:1, but:'Sustain Droop Level', ov:'Droop Lev'};
+    var Release             = {id:46, off:0, val:100, en:1, but:'Release', ov:'Release'};
+    var AttackShape         = {id:47, off:0, val:0, en:1, but:'Attack Shape', ov:'Atk Shape'};
+    var DecayShape          = {id:48, off:0, val:0, en:1, but:'Decay Shape', ov:'Dec Shape'};
+    var SustainDroopShape   = {id:49, off:0, val:0, en:1, but:'Sustain Droop Shape', ov:'SustShape'};
+    var ReleaseShape        = {id:50, off:0, val:0, en:1, but:'Release Shape', ov:'Rel Shape'};
+
+
+    var AM_FixedFreq        = {id:51, off:0, val:0, en:1, but:'AM Fixed Frequency', ov:'Fixed Frq'};
+    var AM_FixedLevel       = {id:52, off:0, val:0, en:1, but:'AM Fixed Level', ov:'Fixed Lev'};
+    var AM_SubHarmFreq      = {id:53, off:0, val:0, en:1, but:'AM Sub Harmonic Frequency', ov:'Sub Freq'};
+    var AM_SubHarmLevel     = {id:54, off:0, val:0, en:1, but:'AM Sub Harmonic Level', ov:'Sub Lev'};
+    var AM_Attack           = {id:55, off:0, val:0, en:1, but:'AM Attack', ov:'Attack'};
+    var AM_Decay            = {id:56, off:0, val:0, en:1, but:'AM Decay', ov:'Decay'};
+    var AM_Release          = {id:57, off:0, val:127, en:1, but:'AM Release', ov:'Release'};
+    var AM_AttackShape      = {id:58, off:0, val:0, en:1, but:'AM Attack Shape', ov:'Atk Shape'};
+    var AM_DecayShape       = {id:59, off:0, val:0, en:1, but:'AM Decay Shape', ov:'Dec Shape'};
+    var AM_ReleaseShape     = {id:60, off:0, val:0, en:1, but:'AM Release Shape', ov:'Rel Shape'};
+
+
+    var FM_FixedFreq        = {id:61, off:0, val:0, en:1, but:'FM Fixed Frequency', ov:'Fixed Frq'};
+    var FM_FixedLevel       = {id:62, off:0, val:0, en:1, but:'FM Fixed Level', ov:'Fixed Lev'};
+    var FM_SubHarmFreq      = {id:63, off:0, val:0, en:1, but:'FM Sub Harmonic Frequency', ov:'Sub Freq'};
+    var FM_SubHarmLevel     = {id:64, off:0, val:0, en:1, but:'FM Sub Harmonic Level', ov:'Sub Lev'};
+    var FM_Attack           = {id:65, off:0, val:0, en:1, but:'FM Attack', ov:'Attack'};
+    var FM_Decay            = {id:66, off:0, val:0, en:1, but:'FM Decay', ov:'Decay'};
+    var FM_Release          = {id:67, off:0, val:127, en:1, but:'FM Release', ov:'Release'};
+    var FM_AttackShape      = {id:68, off:0, val:0, en:1, but:'FM Attack Shape', ov:'Atk Shape'};
+    var FM_DecayShape       = {id:69, off:0, val:0, en:1, but:'FM Decay Shape', ov:'Dec Shape'};
+    var FM_ReleaseShape     = {id:70, off:0, val:0, en:1, but:'FM Release Shape', ov:'Rel Shape'};
+
+
+    var S71                 = {id:71, off:0, val:0, en:1, but:' ', ov:''};
+    var S72                 = {id:72, off:0, val:0, en:1, but:' ', ov:''};
+    var S73                 = {id:73, off:0, val:0, en:1, but:' ', ov:''};
+    var S74                 = {id:74, off:0, val:0, en:1, but:' ', ov:''};
+    var OffsetAttack        = {id:75, off:0, val:0, en:1, but:'Offset Attack', ov:'Off Atk'};
+    var OffsetAmount        = {id:76, off:64, val:64, en:1, but:'Offset Amount', ov:'Off Amt'};
+    var OffsetRelease       = {id:77, off:0, val:0, en:1, but:'Offset Release', ov:'Off Rel'};
+    //var OffsetAttackShape = {id:78, off:0, val:0, en:1, but:'Offset Attack Shape'};
+    //var OffsetReleaseShape = {id:80, off:0, val:0, en:1, but:'Offset Release Shape '};
+    var S78                 = {id:78, off:0, val:0, en:1, but:' ', ov:''};
+    var S79                 = {id:79, off:0, val:0, en:1, but:' ', ov:''};
+    var S80                 = {id:80, off:0, val:0, en:1, but:' ', ov:''};
+
+
+    var ChorusNumberTaps    = {id:81, off:0, val:0, en:1, but:'Chorus Number Taps', ov:'Chor Taps'};
+    var ChorusTapSpacing    = {id:82, off:0, val:0, en:1, but:'Chorus Tap Spacing', ov:'Chor Spac'};
+    var ChorusLevelSlope    = {id:83, off:64, val:64, en:1, but:'Chorus Level Slope ', ov:'Chor Slope'};
+    var ChorusFeedback      = {id:84, off:0, val:0, en:1, but:'Chorus Feedback', ov:'Chor FB'};
+    var ReverbNumberTaps    = {id:85, off:0, val:0, en:1, but:'Reverb Number Taps', ov:'Revb Taps'};
+    var ReverbTapSpacing    = {id:86, off:0, val:0, en:1, but:'Reverb Tap Spacing', ov:'Revb Spac'};
+    var ReverbLevelSlope    = {id:87, off:64, val:64, en:1, but:'Reverb Level Slope', ov:'Revb Slope'};
+    var ReverbFeedback      = {id:88, off:0, val:0, en:1, but:'Reverb Feedback', ov:'Revb FB'};
+    var S89                 = {id:89, off:0, val:0, en:1, but:' ', ov:''};
+    var Quantisation        = {id:90, off:127, val:127, en:1, but:'Quantize (bits)', ov:'Quantize'};
+
+
+    var NoiseAttack         = {id:121, off:0, val:0, en:1, but:'Attack', ov:'Attack'};
+    var NoiseDecay          = {id:122, off:0, val:0, en:1, but:'Decay', ov:'Decay'};
+    var NoiseSustainLevel   = {id:123, off:64, val:64, en:1, but:'Sustain Level', ov:'Sust Lev'};
+    var NoiseSustainDroop   = {id:124, off:0, val:0, en:1, but:'Sustain Droop', ov:'Sust Droop'};
+    var NoiseSustainDroopLevel = {id:125, off:127, val:127, en:1, but:'Sustain Droop Level', ov:'Droop Lev'};
+    var NoiseRelease        = {id:126, off:0, val:0, en:1, but:'Release', ov:'Release'};
+//  var NoiseAttackShape    = {id:127, off:0, val:0, en:1, but:'Attack Shape', ov:'Atk Shape'};
+    var NoiseDelay          = {id:128, off:0, val:0, en:1, but:'Noise Envelope Delay', ov:'Noise Delay'};
+//  var NoiseSustainDroopShape = {id:129, off:0, val:0, en:1, but:'Sustain Droop Shape', ov:'Sust Shape'};
+//  var NoiseReleaseShape   = {id:130, off:0, val:0, en:1, but:'Release Shape', ov:'Rel Shape'};
+
+
+    var NoiseGenMode        = {id:130, off:0, val:3, en:1, but:' '};
+    var NoiseNumber         = {id:133, off:0, val:1, en:1, min : 1, max : 4, but:' '};
+    var TriangleNumber      = {id:134, off:0, val:50, en:1, min : 0, max : 100, but:' '};
+    var SquareNumber        = {id:135, off:0, val:50, en:1, min : 1, max : 99, but:' '};
+    var ChirpNumber         = {id:136, off:0, val:1, en:1, min : 1, max : 2, but:' '};
+    var SampleNumber        = {id:138, off:0, val:1, en:1, min : 1, max : 1, but:' '};
+
+
+    var LevelEnvelopeMode   = {id:140, off:0, val:_FundOver, en:1, but:' '};
+    var OverAttack          = {id:141, off:0, val:0, en:1, but:'Attack'};
+    var OverDecay           = {id:142, off:0, val:0, en:1, but:'Decay'};
+    var OverSustainLevel    = {id:143, off:64, val:64, en:1, but:'Sustain Level'};
+    var OverSustainDroop    = {id:144, off:0, val:127, en:1, but:'Sustain Droop'};
+    var OverSustainDroopLevel={id:145, off:0, val:127, en:1, but:'Sustain Droop Level'};
+    var OverRelease         = {id:146, off:0, val:0, en:1, but:'Release'};
+    var OverDelay           = {id:148, off:0, val:0, en:1, but:'Overtone Envelope Delay'};
+
+
+    var AM_Mode             = {id:150, off:0, val:_FundOver, en:1, but:' '};
+    var OverAM_FixedFreq    = {id:151, off:0, val:0, en:1, but:'AM Fixed Frequency'};
+    var OverAM_FixedLevel   = {id:152, off:0, val:0, en:1, but:'AM Fixed Level'};
+    var OverAM_SubHarmFreq  = {id:153, off:0, val:0, en:1, but:'AM Sub Harmonic Frequency'};
+    var OverAM_SubHarmLevel = {id:154, off:0, val:0, en:1, but:'AM Sub Harmonic Level'};
+    var OverAM_Attack       = {id:155, off:0, val:0, en:1, but:'AM Attack'};
+    var OverAM_Decay        = {id:156, off:0, val:0, en:1, but:'AM Decay'};
+    var OverAM_Release      = {id:157, off:0, val:0, en:1, but:'AM Release'};
+    var AM_LogMod           = {id:159, off:0, val:1, en:1, but:' '};
+
+
+    var FM_Mode             = {id:160, off:0, val:_FundOver, en:1, but:' '};
+    var OverFM_FixedFreq    = {id:161, off:0, val:0, en:1, but:'FM Fixed Frequency'};
+    var OverFM_FixedLevel   = {id:162, off:0, val:0, en:1, but:'FM Fixed Level'};
+    var OverFM_SubHarmFreq  = {id:163, off:0, val:0, en:1, but:'FM Sub Harmonic Frequency'};
+    var OverFM_SubHarmLevel = {id:164, off:0, val:0, en:1, but:'FM Sub Harmonic Level'};
+    var OverFM_Attack       = {id:165, off:0, val:0, en:1, but:'FM Attack'};
+    var OverFM_Decay        = {id:166, off:0, val:0, en:1, but:'FM Decay'};
+    var OverFM_Release      = {id:167, off:0, val:0, en:1, but:'FM Release'};
+    var FM_LogMod           = {id:169, off:0, val:1, en:1, but:' '};
+
+
+    var FreqEnvelopeMode    = {id:170, off:0, val:_FundOver, en:1, but:' '};
+    var OverFreqAttack      = {id:175, off:0, val:0, en:1, but:'Offset Attack'};
+    var OverOffsetAmount    = {id:176, off:0, val:0, en:1, but:' '};
+    var OverFreqRelease     = {id:177, off:0, val:0, en:1, but:'Offset Release'};
+
+
+    var Mute                = {id:100, off:0, val:0, en:1, but:' '};
+
+
+    var Organ               = {id:231, off:0, val:0, max:2, en:1, but:'Organs'};
+    var Piano               = {id:232, off:0, val:0, max:3, en:1, but:'Pianos'};
+    var OtherInsts          = {id:233, off:0, val:0, max:4, en:1, but:'Other Instruments'};
+    var Synth               = {id:234, off:0, val:0, max:5, en:1, but:'Synth Sounds'};
+    var Percussion          = {id:235, off:0, val:0, max:6, en:1, but:'Percussion Sounds'};
+    var UserBank1           = {id:236, off:0, val:0, max:7, en:1, but:'User Bank 1'};
+    var UserBank2           = {id:237, off:0, val:0, max:8, en:1, but:'User Bank 2'};
+    var UserBank3           = {id:238, off:0, val:0, max:9, en:1, but:'User Bank 3'};
+    var UserBank4           = {id:239, off:0, val:0, max:1, en:1, but:'User Bank 4'};
+    var UserBank5           = {id:240, off:0, val:0, max:1, en:1, but:'User Bank 5'};
+
+    var Fader               = {id:220, off:42, val:42, en:1, but:'Centralize Fader', ov:'Cent Fader'};
+    var AfterTouch          = {id:221, off:0, val:0, en:1, but:'After Touch', ov:'AfterTouch'};
+ 
+    var MIDISource          = {id:250, off:0, val:1, en:1, but:' '};    
+    var Preset              = {id:255, off:0, val:-1, en:1, but:' '};
+
+    var Stack = [];
+
+
+    var IDs =
+      [Dummy,SoundGenType,MIDIChannel,MIDISplit,MultiTouch,TouchFreq,TouchLevel,
+       TouchAttack,PitchWheelSens,ModWheelTarg,ModWheelSens,
+       Tune,Temperament,Key,AutoChord,S15,S16,HeadPhones,Width,Pan,Volume,
+       Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,
+       Noise1,Noise2,Noise3,Noise4,Noise5,Noise6,Noise7,Noise8,Noise9,Noise10,
+       Attack,Decay,SustainLevel,SustainDroop,SustainDroopLevel,
+       Release,AttackShape,DecayShape,SustainDroopShape,ReleaseShape,
+       AM_FixedFreq,AM_FixedLevel,AM_SubHarmFreq,AM_SubHarmLevel,
+       AM_Attack,AM_Decay,AM_Release,AM_AttackShape,AM_DecayShape,AM_ReleaseShape,
+       FM_FixedFreq,FM_FixedLevel,FM_SubHarmFreq,FM_SubHarmLevel,
+       FM_Attack,FM_Decay,FM_Release,FM_AttackShape,FM_DecayShape,FM_ReleaseShape,
+       S71,S72,S73,S74,OffsetAttack,OffsetAmount,OffsetRelease,S78,S79,S80,
+       ChorusNumberTaps,ChorusTapSpacing,ChorusLevelSlope,ChorusFeedback,
+       ReverbNumberTaps,ReverbTapSpacing,ReverbLevelSlope,ReverbFeedback,S89,Quantisation,
+       Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,
+       Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,
+       Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,
+       NoiseAttack,NoiseDecay,NoiseSustainLevel,NoiseSustainDroop,NoiseSustainDroopLevel,
+       NoiseRelease,Dummy,Dummy,Dummy,Dummy,
+       Dummy,Dummy,NoiseNumber,TriangleNumber,SquareNumber,ChirpNumber,Dummy,SampleNumber,Dummy,Dummy,
+       OverAttack,OverDecay,OverSustainLevel,
+       OverSustainDroop,OverSustainDroopLevel,OverRelease,Dummy,OverDelay,Dummy,Dummy,
+       OverAM_FixedFreq,OverAM_FixedLevel,OverAM_SubHarmFreq,OverAM_SubHarmLevel,
+       OverAM_Attack,OverAM_Decay,OverAM_Release,Dummy,AM_LogMod,Dummy,
+       OverFM_FixedFreq,OverFM_FixedLevel,OverFM_SubHarmFreq,OverFM_SubHarmLevel,
+       OverFM_Attack,OverFM_Decay,OverFM_Release,Dummy,FM_LogMod,Dummy,
+       Dummy,Dummy,Dummy,Dummy,OverFreqAttack,OverOffsetAmount,OverFreqRelease,Dummy,Dummy,Dummy,
+       Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,
+       Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,Dummy,
+       Overtone1,Overtone2,Overtone3,Overtone4,Overtone5,Overtone6,Overtone7,Overtone8,Overtone9,Overtone10,
+       Overtone11,Overtone12,Overtone13,Overtone14,Overtone15,Overtone16,Overtone17,Overtone18,Overtone19,Fader];
+</script>
+</head>
+
+
+
+<body class='backgnd'>
+
+<div class='main' id='mainscreen'>
+    <div>
+        <button class='copybut' id='copy'   onclick='Mute()'>Mute InPoSe Sound<br>Synthesiser (c)2019</button>
+        <button class='headbut' id='head'   onclick='Start()'><font size = '50vw'>InPoSe<br>Additive<br>Sound<br>Synthesiser</font><br><br><br><br><br>Touch/Click Here To Start</button>
+        <button class='exitbut' id='exit'   onclick='Exit()'>Exit</button>
+    </div>
+
+     <div class='graph' id='graph-id'>
+        <div class='graph-content'>
+            <canvas id='canvas' style = 'border:2px solid #FFFFFF;'>Canvas not supported</canvas>
+        </div>
+    </div>
+
+    <div>
+        <button class='contbut' id='setcont'onclick='SetController()'>Set MIDI Controller</button>
+        <button class='helpbut' id='help'   onclick='MoreHelp()'></button>
+        <button class='sidebut' id='undo'   onclick='Undo()'>Undo</button>
+    </div>
+
+    <div>
+        <button class='mainbut' id='main1'  onclick='Keyboard()'>Keyboard/<br>Sequencer</button>
+        <button class='mainbut' id='main2'  onclick='SynthParam()'>Synth Parameters</button>
+        <button class='mainbut' id='main3'  onclick='Overtones()'>Overtone Structure</button>
+        <button class='mainbut' id='main4'  onclick='NoiseGens()'>Noise Generators</button>
+        <button class='mainbut' id='main5'  onclick='LevelEnvelope()'>Level Envelope</button>
+        <button class='mainbut' id='main6'  onclick='AM()'>AM (Tremelo)</button>
+        <button class='mainbut' id='main7'  onclick='FM()'>FM (Vibrato)</button>
+        <button class='mainbut' id='main8'  onclick='FreqEnvelope()'>Freq Envelope</button>
+        <button class='mainbut' id='main9'  onclick='Effects()'>Effects</button>
+        <button class='mainbut' id='main10' onclick='System()'>Load/Store</button>
+    </div>
+
+    <div>
+        <button class='harmbut' id='harm1'  onclick='Harmbut(1)'></button>
+        <button class='harmbut' id='harm2'  onclick='Harmbut(2)'></button>
+        <button class='harmbut' id='harm3'  onclick='Harmbut(3)'></button>
+        <button class='harmbut' id='harm4'  onclick='Harmbut(4)'></button>
+        <button class='harmbut' id='harm5'  onclick='Harmbut(5)'></button>
+        <button class='harmbut' id='harm6'  onclick='Harmbut(6)'></button>
+        <button class='harmbut' id='harm7'  onclick='Harmbut(7)'></button>
+        <button class='harmbut' id='harm8'  onclick='Harmbut(8)'></button>
+        <button class='harmbut' id='harm9'  onclick='Harmbut(9)'></button>
+        <button class='harmbut' id='harm10' onclick='Harmbut(10)'></button>
+        </div>
+
+    <div>
+        <button class='databut' id='data1'  onclick='Update1(1)'></button>
+        <button class='databut' id='data2'  onclick='Update2(1)'></button>
+        <button class='databut' id='data3'  onclick='Update3(1)'></button>
+        <button class='databut' id='data4'  onclick='Update4(1)'></button>
+        <button class='databut' id='data5'  onclick='Update5(1)'></button>
+        <button class='databut' id='data6'  onclick='Update6(1)'></button>
+        <button class='databut' id='data7'  onclick='Update7(1)'></button>
+        <button class='databut' id='data8'  onclick='Update8(1)'></button>
+        <button class='databut' id='data9'  onclick='Update9(1)'></button>
+        <button class='databut' id='data10' onclick='Update10(1)'></button>
+        </div>
+
+    <div>
+        <button class='valuebut' id='value1' onclick='Update1(1)'></button>
+        <button class='valuebut' id='value2' onclick='Update2(1)'></button>
+        <button class='valuebut' id='value3' onclick='Update3(1)'></button>
+        <button class='valuebut' id='value4' onclick='Update4(1)'></button>
+        <button class='valuebut' id='value5' onclick='Update5(1)'></button>
+        <button class='valuebut' id='value6' onclick='Update6(1)'></button>
+        <button class='valuebut' id='value7' onclick='Update7(1)'></button>
+        <button class='valuebut' id='value8' onclick='Update8(1)'></button>
+        <button class='valuebut' id='value9' onclick='Update9(1)'></button>
+        <button class='valuebut' id='value10' onclick='Update10(1)'></button>
+    </div>
+
+
+    <div class='slider_wrapper'>
+        <div class='slider_navi'>
+            <button class='slibut' id='slibut1'></button>
+            <button class='slibut' id='slibut2'></button>
+            <button class='slibut' id='slibut3'></button>
+            <button class='slibut' id='slibut4'></button>
+            <button class='slibut' id='slibut5'></button>
+            <button class='slibut' id='slibut6'></button>
+            <button class='slibut' id='slibut7'></button>
+            <button class='slibut' id='slibut8'></button>
+            <button class='slibut' id='slibut9'></button>
+            <button class='slibut' id='slibut10'></button>
+        </div>
+
+        <div id='slider_place'>
+            <div class='slider' id='sli1'> <input id='slide1'  type='range' min=0 max=127 oninput='Update1(0)'></div>
+            <div class='slider' id='sli2'> <input id='slide2'  type='range' min=0 max=127 oninput='Update2(0)'></div>
+            <div class='slider' id='sli3'> <input id='slide3'  type='range' min=0 max=127 oninput='Update3(0)'></div>
+            <div class='slider' id='sli4'> <input id='slide4'  type='range' min=0 max=127 oninput='Update4(0)'></div>
+            <div class='slider' id='sli5'> <input id='slide5'  type='range' min=0 max=127 oninput='Update5(0)'></div>
+            <div class='slider' id='sli6'> <input id='slide6'  type='range' min=0 max=127 oninput='Update6(0)'></div>
+            <div class='slider' id='sli7'> <input id='slide7'  type='range' min=0 max=127 oninput='Update7(0)'></div>
+            <div class='slider' id='sli8'> <input id='slide8'  type='range' min=0 max=127 oninput='Update8(0)'></div>
+            <div class='slider' id='sli9'> <input id='slide9'  type='range' min=0 max=127 oninput='Update9(0)'></div>
+            <div class='slider' id='sli10'> <input id='slide10' type='range' min=0 max=127 oninput='Update10(0)'></div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var Mainbuts   = [0, main1, main2, main3, main4, main5, main6, main7, main8, main9, main10];
+    var Harmbuts   = [0, harm1, harm2, harm3, harm4, harm5, harm6, harm7, harm8, harm9, harm10];
+    var Databuts   = [0, data1, data2, data3, data4, data5, data6, data7, data8, data9, data10];
+    var Values     = [0, value1, value2, value3, value4, value5, value6, value7, value8, value9, value10];
+    var Slibuts    = [0, slibut1, slibut2, slibut3, slibut4, slibut5, slibut6, slibut7, slibut8, slibut9, slibut10];
+    var Sliders    = [0, slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8, slide9, slide10];
+    var Slis       = [0, sli1, sli2, sli3, sli4, sli5, sli6, sli7, sli8, sli9, sli10];
+
+    var graph = document.getElementById('graph-id');
+
+
+    Initialise();
+
+
+    // End of Main Code
+
+
+
+    // FUNCTIONS
+    function Overview()
+    {
+        Mode = _Overview;
+            
+        if (Morehelp)
+            MoreHelp();
+        
+        Title('SYNTH PARAMETERS OVERVIEW');
+        MainButOff('Select any column to modify parameters');
+        for (i = 1; i <= 10; i++)
+            SetOpacity(i, 0);
+
+        var h1 = '';
+        var h2 = '';
+        var h3 = '';
+        var h4 = _NoiseGensHelp[NoiseGenMode.val] + '<br><br>';
+        var h5 = ' ';
+        var h6 = ' ';
+        var h7 = ' ';
+        var h8 = ' ';
+        var h9 = ' ';
+        var h10 = ' ';
+        for (i = 1; i <= 10; i++)
+        {
+            h1 = h1 + IDs[i].ov + '<br>' + red(IDs[i].val) + '<br>';
+            if ((i < 5) || (i > 6))
+                if ((i == 7) || (i == 10))
+                    h2 = h2 + IDs[i + 10].ov + '<br>' + red(MIDI2VoldB(IDs[i + 10].val)) + '<br>';
+                else
+                    h2 = h2 + IDs[i + 10].ov + '<br>' + red(IDs[i + 10].val) + '<br>';
+            if (IDs[i + 200].val > 0)
+                h3 = h3 + IDs[i + 200].ov + ': ' + red(MIDI2dB(IDs[i + 200].val)) + '<br>';
+            h4 = h4 + IDs[i + 30].ov + '<br>' + red(MIDI2dB(IDs[i + 30].val)) + '<br>';
+            h5 = h5 + IDs[i + 40].ov + '<br>' + red(IDs[i + 40].val) + '<br>';
+            h6 = h6 + IDs[i + 50].ov + '<br>' + red(IDs[i + 50].val) + '<br>';
+            h7 = h7 + IDs[i + 60].ov + '<br>' + red(IDs[i + 60].val) + '<br>';
+            if (i <= 8)
+                h9 = h9 + IDs[i + 80].ov + '<br>' + red(IDs[i + 80].val) + '<br>';
+            else
+            if (i == 10)
+                h9 = h9 + IDs[i + 80].ov + '<br>' + red((IDs[i + 80].val/4).toFixed(0)) + ' bits<br>';
+            //h10 = h10 + IDs[i + 90].ov + '<br>' + red(IDs[i + 90].val) + '<br>';
+        }
+        for (i = 11; i <= 19; i++)
+        {
+            if (IDs[i + 200].val > 0) 
+                h3 = h3 + IDs[i + 200].ov + ': ' + red(MIDI2dB(IDs[i + 200].val)) + '<br>';
+        }
+        
+        for (i = 5; i <= 7; i++)
+        {
+            h8 = h8 + IDs[i + 70].ov + '<br>' + red(IDs[i + 70].val) + '<br>';
+        }
+        
+        for (i = 1; i <= 10; i++)
+        {
+            h1 = h1 + '<br><br>';
+            h2 = h2 + '<br><br>';
+            h3 = h3 + '<br><br>';
+            h4 = h4 + '<br><br>';
+            h5 = h5 + '<br><br>';
+            h6 = h6 + '<br><br>';
+            h7 = h7 + '<br><br>';
+            h8 = h8 + '<br><br>';
+            h9 = h9 + '<br><br>';
+            h10 = h10 + '<br><br>';
+        }
+
+        SetHarmButtons(h1,h2,h3,h4,h5,h6,h7,h8,h9,h10);
+
+        for (i = 1; i <= 10; i++)
+        {
+            Harmbuts[i].style.height = '43vw';
+            Harmbuts[i].style.background = 'black';
+        }
+    }
+
+
+
+    function Keyboard()
+    {
+        if (Mode == _Keyboard)
+            Overview();
+        else
+        {
+            Mode = _Keyboard;
+            Title('SET MIDI KEYBOARD OR OTHER MIDI INPUT PARAMETERS');
+
+            UpdateAll();
+
+            ButON(Harmbuts[MIDISource.val & 7]);
+
+            MainButOff('Select MIDI Source to Edit and set all Keyboard and Sequencer Parameters for it here (click/touch here for more help)');
+            ButON(main1);
+        }
+    }
+
+
+
+    function SynthParam()
+    {
+        if (Mode == _SynthParam)
+            Overview();
+        else
+        {
+            Mode = _SynthParam;
+            Title('SET TUNING AND OUTPUT VOLUME PARAMETERS');
+
+            SetPresetButtons();
+
+            if (Preset.val >= 0)
+                ButON(Harmbuts[Preset.val]);
+
+            UpdateAll();
+
+            MainButOff('Tune the InPoSe Sound Synthesiser to play with other instruments, set Volumes and Sound Scape, and set other Features');
+            ButON(main2);
+        }
+    }
+
+
+
+    function Overtones()
+    {
+        if (Mode == _Overtones)
+            Overview();
+        else
+        {
+            Mode = _Overtones;
+            Title('SET OVERTONE & HARMONIC STRUCTURE');
+
+            SetHarmButtons('Harmonics 1 - 10','Harmonics 1,11 - 19','Even Harmonics','Odd Harmonics',
+            'Tune<br>2 - 4','Tune<br>5 - 7','Tune<br>8 - 10','Tune<br>11 - 13','Tune<br>14 - 16','Tune<br>17 - 19 ');
+
+            UpdateAll();
+
+            Harmbut(HarmonicGen.val); // call to fade non-selected areas
+
+            MainButOff('The synthesiser supports both integral harmonic and non-integral overtones, or any other frequencies, using these controls');
+            ButON(main3);
+        }
+    }
+
+
+
+    function NoiseGens()
+    {
+        if (Mode == _NoiseGens)
+            Overview();
+        else
+        {
+            Mode = _NoiseGens;
+            Title('SET NOISE GENERATORS PARAMETERS');
+
+            NoiseHarmButtons();
+            ButON(Harmbuts[NoiseGenMode.val]);
+
+            UpdateAll();
+
+            MainButOff('Augment the Additive Sinewave sounds produced by a keypress with filtered noise sources based upon same keypress');
+            ButON(main4);
+        }
+    }
+
+
+
+    function LevelEnvelope()
+    {
+        if (Mode == _LevelEnvelope)
+            Overview();
+        else
+        {
+            Mode = _LevelEnvelope;
+            Title('SET VOLUME ENVELOPE (ADSR) PARAMETERS');
+
+            SetHarmButtons(' ',' ',' ','Fund & Overtones','Fund Only',
+                           'Overtones All Same','Overtones Iterate','Noise ADSR',' ','Copy Fund to Overtones');
+            ButON(Harmbuts[LevelEnvelopeMode.val]);
+
+            UpdateAll();
+
+            MainButOff('Set the ADSR Envelope for each new key pressed.  Sustain Droop allows more accurate modelling of real world sounds');
+            ButON(main5);
+        }
+    }
+
+
+
+    function AM()
+    {
+        if (Mode == _AM)
+            Overview();
+        else
+        {
+            Mode = _AM;
+            Title('SET AMPLITUDE MODULATION PARAMETERS');
+
+            AMFMHarmButtons();
+            ButON(Harmbuts[AM_Mode.val]);
+            HarmButON(AM_LogMod.val);
+            UpdateAll();
+
+            MainButOff('Set the Amplitude Modulation Frequency and Envelope.  AM Freq can be a fixed oscillator or related to the key pressed');
+            ButON(main6);
+        }
+    }
+
+
+
+    function FM()
+    {
+        if (Mode == _FM)
+            Overview();
+        else
+        {
+            Mode = _FM;
+            Title('SET FREQUENCY MODULATION PARAMETERS');
+
+            AMFMHarmButtons();
+            ButON(Harmbuts[FM_Mode.val]);
+            HarmButON(FM_LogMod.val);
+            UpdateAll();
+
+            MainButOff('Set the Frequency Modulation Frequency and Envelope.  FM Freq can be a fixed oscillator or related to the key pressed');
+            ButON(main7);
+        }
+    }
+
+
+
+    function FreqEnvelope()
+    {
+        if (Mode == _FreqEnvelope)
+            Overview();
+        else
+        {
+            Mode = _FreqEnvelope;
+            Title('SET FREQUENCY ENVELOPE PARAMETERS');
+
+            SetHarmButtons(' ',' ',' ','Fund & Overtones','Fund Only',
+                           'Overtones All Same','Overtones Iterate',' ',' ','Copy Fund to Overtones');
+            ButON(Harmbuts[FreqEnvelopeMode.val]);
+
+            UpdateAll();
+
+            MainButOff('Fundamental and Overtone Freqs for any keypress can be modulated by an envelope triggered by the same keypress');
+            ButON(main8);
+        }
+    }
+
+
+
+    function Effects()
+    {
+        if (Mode == _Effects)
+            Overview();
+        else
+        {
+            Mode = _Effects;
+            Title('SET EFFECTS PARAMETERS');
+
+            for (i = 1; i <= 10; i++) Harmbuts[i].innerHTML = ' ';
+            SetHarmVisibility();
+
+            UpdateAll();
+
+            MainButOff('The InPoSe Sound Synthesiser offers a variety of effects suitable for a polyphonic synthesiser');
+            ButON(main9);
+        }
+    }
+
+
+
+    function System()
+    {
+        if (Mode == _System)
+            Overview();
+        else
+        {
+            Mode = _System;
+            Title('LOAD AND STORE SOUNDS FROM MEMORY');
+
+            SetHarmButtons('Delete Sound','Rename Sound',' ','Save Preset',
+                           'Load Sound','Save Sound',' ','Backup All','Restore All','Recover Sound');
+
+            UpdateAll();
+
+            MainButOff('All System Setups can be Saved and Recalled here.  Other System Features can also be controlled');
+            ButON(main10);
+        }
+    }
+
+
+
+
+
+    function Harmbut(harmtype)
+    {
+        //Title('Harmtype ' + harmtype);
+        var special = -1;
+
+        if (Mode == _Overview)
+        {
+                 if (harmtype == 1) Keyboard();
+            else if (harmtype == 2) SynthParam();
+            else if (harmtype == 3) Overtones();
+            else if (harmtype == 4) NoiseGens();
+            else if (harmtype == 5) LevelEnvelope();
+            else if (harmtype == 6) AM();
+            else if (harmtype == 7) FM();
+            else if (harmtype == 8) FreqEnvelope();
+            else if (harmtype == 9) Effects();
+            else if (harmtype == 10) System();
+            harmtype = 0;
+        }
+        
+        
+        else
+        if (Mode == _Keyboard)
+        {
+            if ([8].indexOf(harmtype) != -1) return;
+
+            // Handle Keyboard & Sequencer here
+            
+            if (harmtype == 6)
+            {
+                special = harmtype; 
+                MIDISource.val = MIDISource.val | 8;
+                harmtype = MIDISource.val & 7;
+            }
+            else
+            if (harmtype == 7)
+            {
+                special = harmtype; 
+                MIDISource.val = MIDISource.val & 7;
+                harmtype = MIDISource.val;
+            }
+            else
+                MIDISource.val = harmtype; 
+            
+            Title('SET MIDI KEYBOARD OR OTHER MIDI INPUT PARAMETERS');
+            if ((harmtype >= 1) && (harmtype <= 5))
+            {
+                SendDataByID(MIDISource);    
+                Help('All Parameters for this MIDI input will be downloaded from the Synth Controller (may take a few seconds)');            
+            }
+            else
+            if (harmtype == 9)
+            {
+            }
+            else
+            if (harmtype == 10)
+            {
+            }
+            //'Connect to, and Set All Parameters for Interpreting Inputs from your MIDI Keyboard',
+            //'Record a Sequence of Keystrokes',
+            //'Play back a Sequence of Keystrokes',
+        }
+
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Preset.val = harmtype;
+            Help('Preset ' + (Preset.val) + ' loaded');
+            SendDataByID(Preset);
+ 
+            // Load Preset here
+        }
+
+
+        else
+        if (Mode == _Overtones)
+        {
+            HarmonicGen.val = harmtype;
+            SendDataByID(HarmonicGen);
+
+            for (i = 1; i <= 10; i++)
+                Harmbuts[i].style.opacity = 0.5;
+
+            if (harmtype == 1)
+            {
+                Help('Set the Level of the Fundamental and Harmonic Overtones 2 to 10.  Set the higher harmonics on the button to right');
+                SetOddHarmonics(1);
+                SetEvenHarmonics(1);
+                Harmbuts[1].style.opacity = 1;
+                Harmbuts[2].style.opacity = 1;
+            }
+
+            else
+            if (harmtype == 2)
+            {
+                Help('Set the Level of the Fundamental and Harmonic Overtones 11 to 19.  Set the lower harmonics on the button to left');
+                SetOddHarmonics(1);
+                SetEvenHarmonics(1);
+                Harmbuts[1].style.opacity = 1;
+                Harmbuts[2].style.opacity = 1;
+            }
+
+            else
+            if (harmtype == 3)
+            {
+                Help('Set the Level of the Fundamental and 9 Even Harmonic Overtones.  All odd harmonics are muted in this mode');
+                SetOddHarmonics(0);
+                SetEvenHarmonics(1);
+                Harmbuts[3].style.opacity = 1;
+            }
+
+            else
+            if (harmtype == 4)
+            {
+                Help('Set the Level of the Fundamental and 9 Odd Harmonic Overtones.  All even harmonics are muted in this mode');
+                SetOddHarmonics(1);
+                SetEvenHarmonics(0);
+                Harmbuts[4].style.opacity = 1;
+            }
+
+            else
+            {
+                Help('Set Non-Integral Harmonic Overtone sound structures Relative to the Fundamental using these six Tune buttons');
+                SetOddHarmonics(1);
+                SetEvenHarmonics(1);
+                for (i = 5; i <= 10; i++)
+                    Harmbuts[i].style.opacity = 1;
+            }
+
+            UpdateAll();
+        }
+
+
+        else
+        if (Mode == _NoiseGens)
+        {
+            if ([2,9].indexOf(harmtype) != -1) return;
+
+            if (harmtype == 1)
+            {
+                     if (NoiseGenMode.val == 3) DecNoise(NoiseNumber);
+                else if (NoiseGenMode.val == 4) DecNoise(TriangleNumber);
+                else if (NoiseGenMode.val == 5) DecNoise(SquareNumber);
+                else if (NoiseGenMode.val == 6) DecNoise(ChirpNumber);
+                else if (NoiseGenMode.val == 8) DecNoise(SampleNumber.val);
+                harmtype = NoiseGenMode.val;
+            }
+            else
+            if (harmtype == 10)
+            {
+                     if (NoiseGenMode.val == 3) IncNoise(NoiseNumber);
+                else if (NoiseGenMode.val == 4) IncNoise(TriangleNumber);
+                else if (NoiseGenMode.val == 5) IncNoise(SquareNumber);
+                else if (NoiseGenMode.val == 6) IncNoise(ChirpNumber);
+                else if (NoiseGenMode.val == 8) IncNoise(SampleNumber.val);
+                harmtype = NoiseGenMode.val;
+            }
+
+            NoiseHarmButtons();
+            NoiseGenMode.val = harmtype;
+
+            SendDataByID(NoiseGenMode);
+            if (harmtype == 7)
+                Help('Adjust the sliders to build a sum of sinewaves to accompany the main sinewave generators (suggest set 440Hz to fully off)');
+            else
+                Help('Increment or Decrement selected ' + _NoiseGensHelp[harmtype] + ' and filter with the graphic equaliser using octaves of the key pressed');
+        }
+
+
+        else
+        if (Mode == _LevelEnvelope)
+        {
+            if ([1,2,3,9].indexOf(harmtype) != -1) return;
+
+            Help(_LevelEnvelopeHelp[harmtype]);
+
+            if (harmtype == 10)
+            {
+                harmtype = 4;
+                UpdateSendObject(OverAttack, Attack);
+                UpdateSendObject(OverDecay, Decay);
+                UpdateSendObject(OverSustainLevel, SustainLevel);
+                UpdateSendObject(OverSustainDroop, SustainDroop);
+                UpdateSendObject(OverSustainDroopLevel, SustainDroopLevel);
+                UpdateSendObject(OverRelease, Release);
+            }
+            LevelEnvelopeMode.val = harmtype;
+            SendDataByID(LevelEnvelopeMode);
+            UpdateAll();
+            ButON(main5);
+        }
+
+
+        else
+        if (Mode == _AM)
+        {
+            if ([3,8,9].indexOf(harmtype) != -1) return;
+
+            Help(_AMHelp[harmtype]);
+
+            if (harmtype <= 2)
+            {
+                AM_LogMod.val = harmtype;
+                SendDataByID(AM_LogMod);
+                harmtype = AM_Mode.val;
+            }
+            else
+            if (harmtype == 10)
+            {
+                harmtype = 4;
+                UpdateSendObject(OverAM_FixedFreq, AM_FixedFreq);
+                UpdateSendObject(OverAM_FixedLevel, AM_FixedLevel);
+                UpdateSendObject(OverAM_SubHarmFreq, AM_SubHarmFreq);
+                UpdateSendObject(OverAM_SubHarmLevel, AM_SubHarmLevel);
+                UpdateSendObject(OverAM_Attack, AM_Attack);
+                UpdateSendObject(OverAM_Decay, AM_Decay);
+                UpdateSendObject(OverAM_Release, AM_Release);
+            }
+            AM_Mode.val = harmtype;
+            SendDataByID(AM_Mode);
+            UpdateAll();
+            ButON(main6);
+            special = AM_LogMod.val;
+        }
+
+
+        else
+        if (Mode == _FM)
+        {
+            if ([3,8,9].indexOf(harmtype) != -1) return;
+
+            Help(_FMHelp[harmtype]);
+            if (harmtype <= 2)
+            {
+                FM_LogMod.val = harmtype;
+                SendDataByID(FM_LogMod);
+                harmtype = FM_Mode.val;
+            }
+            else
+            if (harmtype == 10)
+            {
+                harmtype = 4;
+                UpdateSendObject(OverFM_FixedFreq, FM_FixedFreq);
+                UpdateSendObject(OverFM_FixedLevel, FM_FixedLevel);
+                UpdateSendObject(OverFM_SubHarmFreq, FM_SubHarmFreq);
+                UpdateSendObject(OverFM_SubHarmLevel, FM_SubHarmLevel);
+                UpdateSendObject(OverFM_Attack, FM_Attack);
+                UpdateSendObject(OverFM_Decay, FM_Decay);
+                UpdateSendObject(OverFM_Release, FM_Release);
+            }
+            FM_Mode.val = harmtype;
+            SendDataByID(FM_Mode);
+            UpdateAll();
+            ButON(main7);
+            special = FM_LogMod.val;
+        }
+
+
+        else
+        if (Mode == _FreqEnvelope)
+        {
+            if ([4,5,6,7,10].indexOf(harmtype) == -1) return;
+
+            Help(_FreqOffsetHelp[harmtype]);
+            if (harmtype == 10)
+            {
+                harmtype = 4;
+                UpdateSendObject(OverFreqAttack, OffsetAttack);
+                UpdateSendObject(OverFreqDecay, OffsetDecay);
+                UpdateSendObject(OverFreqRelease, OffsetRelease);
+            }
+            FreqEnvelopeMode.val = harmtype;
+            SendDataByID(FreqEnvelopeMode);
+            UpdateAll();
+            ButON(main8);
+        }
+
+
+        else
+        if (Mode == _System)
+        {
+            if ([3,7].indexOf(harmtype) != -1) return;
+
+            TenColumns(1);
+
+            if (harmtype == 1) // Delete
+            {
+                if (DeleteType == 0)
+                {
+                    NineColumns(1);
+                    DeleteType = 1;
+                    SaveDest = 0;
+                }
+                else
+                if (DeleteType == 1)
+                {
+                    if (SaveDest > 0)
+                    {
+                        if (window.confirm('Delete the Selected Sound Patch from the Selected Bank ?'))
+                        {
+                        }
+                    }
+                    else
+                    if (window.confirm('Select one of the Sound Banks and the Sound Patch to Delete'))
+                    {
+                    }
+                }
+            }
+
+            else
+            if (harmtype == 2) // Rename
+            {
+                if (RenameType == 0)
+                {
+                    NineColumns(1);
+                    RenameType = 1;
+                    SaveDest = 0;
+                }
+                else
+                if (RenameType == 1)
+                {
+                    if (SaveDest > 0)
+                    {
+                        var SaveName = window.prompt('Enter Name of this Sound Patch to be Renamed as','Sound 1');
+                        RenameSound(SaveDest, Sliders[SaveDest].val, SaveName);
+                    }
+                    else
+                    if (window.confirm('Select one of the Sound Banks and the Sound Patch to Rename'))
+                    {
+                    }
+                }
+            }
+
+            else
+            if (harmtype == 4) // Save Preset
+            {
+                if (SaveType == 0)
+                {
+                    Mode = _SavePreset;
+                    TenColumns(0);
+                    harmtype = -1;
+                    SetPresetButtons();
+                    Help('Select the Preset to Store the Current Sound in.  Press Load/Store again to not save anything');
+               }
+            }
+
+            else
+            if (harmtype == 5) // Load
+            {
+                NineColumns(1);
+                SaveType = 0;
+                if (SoundSaved == 0)
+                {
+                    if (window.confirm('The current Sound Patch was not saved so has been placed on the Recover Sounds list'))
+                        SaveSound(11);
+                    else
+                        harm4.style.backgroundColor = _harmbutOFF;
+                }
+            }
+
+            else
+            if (harmtype == 7) // Save
+            {
+                if (SaveType == 0)
+                {
+                    NineColumns(1);
+                    SaveType = 1;
+                    SaveDest = 0;
+                }
+                else
+                if (SaveType == 1)
+                {
+                    if (SaveDest > 0)
+                    {
+                        var SaveName = window.prompt('Enter Name of this Sound Patch to be Saved as','Sound 1');
+                        SaveSound(SaveDest, SaveName);
+                    }
+                    else
+                    if (window.confirm('Select one of the Sound Banks to Save this Sound to'))
+                    {
+                    }
+                }
+            }
+
+            else
+            if (harmtype == 8) // Backup
+            {
+                TenColumns(0);
+                SaveType = 0;
+                if (SoundSaved == 0)
+                {
+                    window.confirm('Please plug a formatted blank USB Memory Stick in the MIDI USB Port');
+                    SoundSaved = 1;
+                }
+            }
+
+            else
+            if (harmtype == 9) // Restore
+            {
+                TenColumns(0);
+                SaveType = 0;
+                if (SoundSaved == 0)
+                {
+                    window.confirm('Please plug a USB Memory Stick with Saved Sound Patches in the MIDI USB Port');
+                    SoundSaved = 1;
+                }
+            }
+
+            else
+            if (harmtype == 10) // Recover
+            {
+                NineColumns(0);
+                SaveType = 0;
+                if (SoundSaved == 0)
+                {
+                    window.confirm('The current Sound Patch has been saved at the top of the Recover Sounds list');
+                    SoundSaved = 1;
+                }
+            }
+        }
+
+        else
+        if (Mode == _SavePreset)
+        {
+            // Save everything to Preset harmtype here
+            Help('Complete Sound Patch has been Saved to Preset ' + harmtype);
+        }
+
+        for (i = 1; i <= 10; i++)
+            Harmbuts[i].style.backgroundColor = _harmbutOFF;
+        ButON(Harmbuts[harmtype]);
+        if (special >= 0)
+            ButON(Harmbuts[special]);
+    }
+
+
+
+
+
+    function Update(data, updatetype, main, sub, help)
+    {
+        if (updatetype == 1)
+        {
+            if (Databuts[sub].style.backgroundColor != _butON)
+            {
+                MainButOff(help);
+                DataButsOff();
+                ButON(main);
+
+                data.en = 1;
+                SaveDest = sub; // for saving, etc
+            }
+            else
+            if (Mode != _System)
+            {
+                Help('Parameter reset to default - Press again to restore');
+                data.en = 0;
+            }
+            DataButOnOff(sub, data.en);
+            if (HarmonicGen.val >= 5)
+            {
+                DataButOnOff(sub-1, data.en);
+                DataButOnOff(sub-2, data.en);
+            }
+
+            if (Mode == _LevelEnvelope)
+                Overlay(Attack.id, OverAttack.id, NoiseAttack.id);
+            else
+            if (Mode == _AM)
+                Overlay2(AM_Attack.id);
+            else
+            if (Mode == _FM)
+                Overlay2(FM_Attack.id);
+
+            SendDataByID(data);
+        }
+        else
+        if (updatetype == 0)
+        {
+            if (sub < 10)
+                SoundSaved = 0;
+            DataButsOff();
+            DataButOnOff(sub, data.en);
+            Help(help);
+
+            if (Stack.length > 4000)
+                Stack = Stack.slice(2000, Stack.length);
+
+            if ((data.id >= 201) && (data.id <= 219))
+            {
+                if ((HarmonicGen.val >= 5) && (sub > 1))
+                {
+                    DataButOnOff(sub-1, data.en);
+                    DataButOnOff(sub-2, data.en);
+                }
+
+                Stack.push(data.coarse);
+                Stack.push(data.fine);
+                Stack.push(data.val);
+                Stack.push(data.id);
+
+                data.val = Sliders[sub].value;
+                data.en = 1;
+            }
+            else
+            {
+                Stack.push(data.val);
+                Stack.push(data.id);
+                data.val = Sliders[sub].value;
+                data.en = 1;
+
+                if (Mode == _LevelEnvelope)
+                    Overlay(Attack.id, OverAttack.id, NoiseAttack.id);
+                else
+                if (Mode == _AM)
+                    Overlay2(AM_Attack.id);
+                else
+                if (Mode == _FM)
+                    Overlay2(FM_Attack.id);
+            }
+
+            SendDataByID(data);
+        }
+        else
+        if (updatetype == 2)
+        {
+            if (data.but == ' ')
+                SetOpacity(sub, 0);
+            else
+            {
+                SetOpacity(sub, 1);
+                Databuts[sub].innerHTML = data.but;
+                Sliders[sub].value = data.val;
+                if (data.en == 0)
+                    Databuts[sub].style.backgroundColor = _butRED;
+                else
+                    Databuts[sub].style.backgroundColor = _databutOFF;
+            }
+        }
+
+        if (data.en)
+            Values[sub].innerHTML = data.val;
+        else
+            Values[sub].innerHTML = data.off;
+    }
+
+
+
+    function CoarseUpdate(data, updatetype, main, sub, help)
+    {
+        if (updatetype == 1)
+        {
+            if (Databuts[sub].style.backgroundColor != _butON)
+            {
+                MainButOff(help);
+                DataButsOff();
+                ButON(main);
+                data.en = 1;
+            }
+            else
+            {
+                data.en = 0;
+                Help('Parameter reset to default - Press again to restore');
+            }
+            DataButOnOff(sub, data.en);
+            DataButOnOff(sub+1, data.en);
+            DataButOnOff(sub+2, data.en);
+
+            SendDataByID(data);
+        }
+        else
+        if (updatetype == 0)
+        {
+            if (sub < 10)
+                SoundSaved = 0;
+            DataButsOff();
+            DataButOnOff(sub, data.en);
+            DataButOnOff(sub+1, data.en);
+            DataButOnOff(sub+2, data.en);
+            Help(help);
+
+            Stack.push(data.coarse);
+            Stack.push(data.fine);
+            Stack.push(data.val);
+            Stack.push(data.id);
+
+            data.coarse = Math.trunc(Sliders[sub].value/2) + (data.id - 202) * 4;
+            data.fine = 64;
+            Sliders[sub + 1].value = data.fine;
+
+            data.en = 1;
+            SendDataByID(data);
+        }
+        else
+        if (updatetype == 2)
+        {
+            SetOpacity(sub, 1);
+            Databuts[sub].innerHTML = data.but;
+            Sliders[sub].value = (data.coarse * 2) - (data.id - 202) * 4;
+            if (data.en == 0)
+                Databuts[sub].style.backgroundColor = _butRED;
+            else
+                Databuts[sub].style.backgroundColor = _databutOFF;
+        }
+
+        LevelDisplay(data, sub + 2);
+        FineDisplay(data, sub + 1);
+
+        Values[sub].innerHTML = 'Fund x<br>' + CoarseAdjust[data.coarse];
+
+        if (updatetype < 2)
+            Help('Ratio of Overtone to Fundamental is : '
+                 + CoarseAdjust[data.coarse] * Math.pow(1.0005777895, (data.fine - 64)));
+    }
+
+
+
+    function FineUpdate(data, updatetype, main, sub, help)
+    {
+        if (updatetype == 1)
+        {
+            if (Databuts[sub].style.backgroundColor != _butON)
+            {
+                MainButOff(help);
+                DataButsOff();
+                ButON(main);
+                data.en = 1;
+            }
+            else
+            {
+                data.en = 0;
+                Help('Parameter reset to default - Press again to restore');
+            }
+            DataButOnOff(sub-1, data.en);
+            DataButOnOff(sub, data.en);
+            DataButOnOff(sub+1, data.en);
+
+            SendDataByID(data);
+        }
+        else
+        if (updatetype == 0)
+        {
+            if (sub < 10)
+                SoundSaved = 0;
+            DataButsOff();
+            DataButOnOff(sub-1, data.en);
+            DataButOnOff(sub, data.en);
+            DataButOnOff(sub+1, data.en);
+            Help(help);
+
+            Stack.push(data.coarse);
+            Stack.push(data.fine);
+            Stack.push(data.val);
+            Stack.push(data.id);
+
+            data.fine = Sliders[sub].value;
+            data.en = 1;
+            SendDataByID(data);
+        }
+        else
+        if (updatetype == 2)
+        {
+            SetOpacity(sub, 1);
+            Databuts[sub].innerHTML = data.but;
+            Sliders[sub].value = data.fine;
+            if (data.en == 0)
+                Databuts[sub].style.backgroundColor = _butRED;
+            else
+                Databuts[sub].style.backgroundColor = _databutOFF;
+        }
+
+        LevelDisplay(data, sub + 1);
+        FineDisplay(data, sub);
+
+        if (updatetype < 2)
+            Help('Ratio of Overtone to Fundamental is : '
+                 + CoarseAdjust[data.coarse] * Math.pow(1.0005777895, (data.fine - 64)));
+    }
+
+
+
+    function FineDisplay(data, sub)
+    {
+        var diff = data.fine - 64;
+        if (diff < 0)
+        {
+            diff = Math.abs(diff);
+            Values[sub].innerHTML = '- ' + diff + '<br>Cents';
+        }
+        else
+            Values[sub].innerHTML = '+ ' + diff + '<br>Cents';
+   }
+
+
+
+    function ShapeUpdate(mode, data1, data2, updatetype, main, sub, help)
+    {
+        if (mode.val <= _FundOnly)
+        {
+            var data;
+            if (mode.val <= _FundOnly)
+                data = data1;
+            else
+                data = data2;
+            Update(data, updatetype, main, sub, help);
+
+            if ((!data.en) || (data.val < 2))
+                Values[sub].innerHTML = 'Exp Scale';
+            else
+            if (data.val >= 126)
+                Values[sub].innerHTML = 'Linear Scale';
+            else
+                Values[sub].innerHTML = data.val;
+        }
+        else
+            SetOpacity(sub, 0);
+    }
+
+
+
+    function LevelUpdate(data, updatetype, main, sub, help)
+    {
+        Update(data, updatetype, main, sub, help);
+        LevelDisplay(data, sub);
+    }
+
+
+
+    function LevelDisplay(data, sub)
+    {
+        if (data.en)
+            Values[sub].innerHTML = MIDI2dB(data.val);
+        else
+            Values[sub].innerHTML = '-∞ dB';
+        /*
+        if ((!data.en) || (data.val < 2))
+            Values[sub].innerHTML = '-∞ dB';
+        else
+        if (data.val < 15)
+            Values[sub].innerHTML = ((data.val - 43)*2).toFixed(1) + ' dB'; // -∞dB to -58dB
+        else
+        if (data.val < 30)
+            Values[sub].innerHTML = ((data.val - 72)).toFixed(1) + ' dB';   // -57dB to -43dB
+        else
+            Values[sub].innerHTML = ((data.val - 114)/2).toFixed(1) + ' dB';// -42dB to +6.5
+        */
+    }
+    
+    
+    
+    function MIDI2dB(val)
+    {
+         if (val < 2)
+            return '-∞ dB';
+        else
+        if (val < 15)
+            return ((val - 43)*2).toFixed(1) + ' dB';                       // -∞dB to -58dB
+        else
+        if (val < 30)
+            return ((val - 72)).toFixed(1) + ' dB';                         // -57dB to -43dB
+        else
+            return ((val - 114)/2).toFixed(1) + ' dB';                      // -42dB to +6.5
+    }
+    
+    
+    
+    function MIDI2VoldB(val)
+    {
+        if (val < 3)
+             return '-∞ dB';
+        else
+        if (val < 15)
+            return ((val - 40)*2).toFixed(1) + ' dB';                       // -∞dB to -52dB
+        else
+        if (val < 30)
+            return ((val - 65)).toFixed(1) + ' dB';                         // -50dB to -36dB
+        else
+            return ((val - 100)/2).toFixed(1) + ' dB';                      // -35dB to +13.5
+    }
+    
+
+
+    function ModulationUpdate(mode, data1, data2, data3, updatetype, main, sub, help)
+    {
+        if (mode.val == _NoiseADSR)
+        {
+            Update(data3, updatetype, main, sub, help);
+        }
+        else
+        if (mode.val == _FundOver)
+        {
+            Update(data1, updatetype, main, sub, help);
+            data2.val = data1.val;
+            data2.en = data1.en;
+            SendDataByID(data2);
+         }
+        else
+        if (mode.val == _FundOnly)
+            Update(data1, updatetype, main, sub, help);
+        else
+            Update(data2, updatetype, main, sub, help);
+    }
+
+
+
+    function Update1(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(SoundGenType, updatetype, main1, 1, 'Set Sound Type for this Keyboard');
+            value1.innerHTML = _SoundGenTypes[Math.floor(value1.innerHTML/13)];
+         }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Update(Tune, updatetype, main2, 1, 'Tune the Synth away from an exact A = 440 Hz');
+            if (value1.innerHTML == 64)
+                value1.innerHTML = '440Hz Exactly'
+            else
+            if (value1.innerHTML < 64)
+                value1.innerHTML = '- ' + Math.abs(value1.innerHTML - 64) + '<br>cents';
+            else
+               value1.innerHTML = '+ ' + (value1.innerHTML - 64) + '<br>cents';
+        }
+
+        else
+        if (Mode == _Overtones)
+            LevelUpdate(Overtone1, updatetype, main3, 1, '-');
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise1, updatetype, main4, 1, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+        {
+            ModulationUpdate(LevelEnvelopeMode, Attack, OverAttack, NoiseAttack, updatetype, main5, 1, 'Set the Level Envelope Attack Time (0 = fastest)');
+        }
+
+        else
+        if (Mode == _AM)
+            ModulationUpdate(AM_Mode, AM_FixedFreq, OverAM_FixedFreq, Dummy, updatetype, main6, 1, 'Set a Fixed Amplitude Modulation Frequency');
+
+        else
+        if (Mode == _FM)
+            ModulationUpdate(FM_Mode, FM_FixedFreq, OverFM_FixedFreq, Dummy, updatetype, main7, 1, 'Set a Fixed Frequency Modulation Frequency');
+
+        else
+        if (Mode == _FreqEnvelope)
+            Update(S71, updatetype, main8, 1, ' ');
+
+        else
+        if (Mode == _Effects)
+            Update(ChorusNumberTaps, updatetype, main9, 1, 'Set the Number of Taps in the Chorus Effect Generator');
+
+        else
+        if (Mode == _System)
+        {
+            Update(Organ, updatetype, main10, 1, 'Selection of Organ type Sounds');
+            value1.innerHTML = (1.0 + (value1.innerHTML * Organ.max >> 7)).toFixed(0);
+        }
+    }
+
+
+
+    function Update2(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(MIDIChannel, updatetype, main1, 2, 'Set MIDI Channel Number for the InPoSe Sound Synthesiser to listen for commands from for selected MIDI source');
+            if ((MIDISplit.val <= 3) || (MIDISplit.val >= 124))
+                value2.innerHTML = (value2.innerHTML >> 4) + 1;
+            else
+                value2.innerHTML = ((value2.innerHTML >> 4) + 1) + '/' + ((value2.innerHTML >> 4) + 9);
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            var Temperaments = ['Equal Temper','Equal Temper','Pythag Tuning','Well Temper','Meantone Tuning',
+                                ' ',' ',' ','Just-Int 5-Limit','Just-Int Overtone',' ','Lucy Tuning',
+                                ' ',' ',' ','Equal Temper'];
+            Update(Temperament, updatetype, main2, 2, 'Select one of the available temperaments');
+            value2.innerHTML = Temperaments[(Temperament.val * Temperament.en) >> 3];
+        }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone2, Overtone11, Overtone2, Overtone3,
+                             Overtone2, Overtone5, Overtone8, Overtone11, Overtone14, Overtone17];
+            if (HarmonicGen.val <= 4)
+                LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 2, '-');
+            else
+                CoarseUpdate(OverTones[HarmonicGen.val], updatetype, main3, 2, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise2, updatetype, main4, 2, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+            ModulationUpdate(LevelEnvelopeMode, Decay, OverDecay, NoiseDecay, updatetype, main5, 2, 'Set the Level Envelope Decay Time (0 = fastest)');
+
+        else
+        if (Mode == _AM)
+        {
+            ModulationUpdate(AM_Mode, AM_FixedLevel, OverAM_FixedLevel, Dummy, updatetype, main6, 2, 'Set the Depth of the Fixed Frequency Amplitude Modulation');
+            if (value2.innerHTML == 0)
+                value2.innerHTML = 'Off';
+            else
+                value2.innerHTML = value2.innerHTML/20 + '<br>dB';
+        }
+
+        else
+        if (Mode == _FM)
+        {
+            ModulationUpdate(FM_Mode, FM_FixedLevel, OverFM_FixedLevel, Dummy, updatetype, main7, 2, 'Set the Depth of the Fixed Frequency Frequency Modulation');
+            if (value2.innerHTML == 0)
+                value2.innerHTML = 'Off';
+            else
+                value2.innerHTML = value2.innerHTML/10 + '<br>semitones';
+         }
+
+        else
+        if (Mode == _FreqEnvelope)
+            Update(S72, updatetype, main8, 2, ' ');
+
+        else
+        if (Mode == _Effects)
+        {
+            Update(ChorusTapSpacing, updatetype, main9, 2, 'Set the Time in Milliseconds between the Equally Spaced Taps on the Chorus Effect Generator');
+            value2.innerHTML = value2.innerHTML + ' mS'
+        }
+
+        else
+        if (Mode == _System)
+        {
+            Update(Piano, updatetype, main10, 2, 'Selection of Piano type Sounds');
+            value2.innerHTML = (1.0 + (value2.innerHTML * Piano.max >> 7)).toFixed(0);
+        }
+    }
+
+
+
+    function Update3(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            //Update(Fader, updatetype, main1, 2, 'Centralise the Fader if offset.  I know it should do it automatically but still working on it doing so for all browsers/screen sizes');
+            //for (i = 1; i <= 10; i++)
+            //{
+            //    Slis[i].style.width = (1.7 - (value2.innerHTML - 64)/32) + 'vw';
+            //    Slis[i].style.marginLeft = (7.3 + (value2.innerHTML - 64)/32) + 'vw';
+            //}
+            
+            Update(MIDISplit, updatetype, main1, 3, 'Split the selected keyboard at any note.  (Internally the lower part of the keyboard uses selected MIDI channel plus 8)');
+            if ((MIDISplit.val <= 3) || (MIDISplit.val >= 124))
+            {
+                value3.innerHTML = 'No Split';
+                MIDISource.val = MIDISource.val & 7;
+                SetHarmButtons('Keyboard<br>1','Keyboard<br>2','Keyboard<br>3','Keyboard<br>4','Keyboard<br>5',' ',' ',' ','Internal Sequencer Record','Internal Sequencer Playback');
+            }
+            else
+            {
+                value3.innerHTML = _MIDINotes[(Math.floor(value3.innerHTML/2) + 32) % 12] + (Math.floor(value3.innerHTML / 24) + 1);
+                SetHarmButtons('Keyboard<br>1','Keyboard<br>2','Keyboard<br>3','Keyboard<br>4','Keyboard<br>5','Lower Keys','Upper Keys',' ','Internal Sequencer Record','Internal Sequencer Playback');
+                MIDISource.val = MIDISource.val & 7;
+                ButON(Harmbuts[7]);
+            }
+            ButON(Harmbuts[MIDISource.val & 7]);
+            
+            Title('SET MIDI KEYBOARD OR OTHER MIDI INPUT PARAMETERS');
+        
+            Update2();        
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Update(Key, updatetype, main2, 3, 'Set the Key for non-equal temperaments.  C# is not same as Db but is the black keyboard note the scale begins with');
+            value3.innerHTML = _RootNotes[Math.floor(value3.innerHTML/11)];    
+         }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone3, Overtone12, Overtone4, Overtone5,
+                             Overtone2, Overtone5, Overtone8, Overtone11, Overtone14, Overtone17];
+            if (HarmonicGen.val <= 4)
+                LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 3, '-');
+            else
+                FineUpdate(OverTones[HarmonicGen.val], updatetype, main3, 3, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise3, updatetype, main4, 3, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+        {
+            ModulationUpdate(LevelEnvelopeMode, SustainLevel, OverSustainLevel, NoiseSustainLevel, updatetype, main5, 3, 'Set the Level Envelope Sustain Level as a percentage of the peak level');
+            value3.innerHTML = (100 * (value3.innerHTML/127)).toFixed(0) + '%';
+        }
+
+        else
+        if (Mode == _AM)
+            ModulationUpdate(AM_Mode, AM_SubHarmFreq, OverAM_SubHarmFreq, Dummy, updatetype, main6, 3, 'Set the Amplitude Modulation Frequency as a Sub-Multiple of the Signal Frequency');
+
+        else
+        if (Mode == _FM)
+            ModulationUpdate(FM_Mode, FM_SubHarmFreq, OverFM_SubHarmFreq, Dummy, updatetype, main7, 3, 'Set the Frequency Modulation Frequency as a Sub-Multiple of the Signal Frequency');
+
+        else
+        if (Mode == _FreqEnvelope)
+            Update(S73, updatetype, main8, 3, ' ');
+
+        else
+        if (Mode == _Effects)
+        {
+            Update(ChorusLevelSlope, updatetype, main9, 3, 'Set the Amplitude Slope of the Taps on the Chorus Effect Generator  (0 dB = all equal)');
+            value3.innerHTML = (value3.innerHTML - 64)/10 + '<br>dB';
+        }
+
+        else
+        if (Mode == _System)
+        {
+            Update(OtherInsts, updatetype, main10, 3, 'Selection of Sounds from Other Instruments');
+            value3.innerHTML = (1.0 + (value3.innerHTML * OtherInsts.max >> 7)).toFixed(0);
+        }
+    }
+
+
+
+    function Update4(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(MultiTouch, updatetype, main1, 4, 'Multitouch ON allows a note to be repeatedly pressed without ending a previous press of the same note that is still decaying');
+
+            if ((MultiTouch.val * MultiTouch.en) >= 64)
+                value4.innerHTML = 'On';
+            else
+                value4.innerHTML = 'Off';
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            var AutoChords = ['Note Only','Major','Minor','Diminish','Suspend 2','Suspend 4','Augment',
+                              'Major 7th','Minor 7th','Half Dim 7th','Diminish 7th','Dominant 9th',
+                              'Major 11th','??','??','Note Only'];
+            Update(AutoChord, updatetype, main2, 4, 'Allows the user to play a chord with a single keypress.  Set to Note Only for normal playing action');
+            value4.innerHTML = AutoChords[(AutoChord.val * AutoChord.en) >> 3];
+        }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone4, Overtone13, Overtone6, Overtone7,
+                             Overtone2, Overtone5, Overtone8, Overtone11, Overtone14, Overtone17];
+            LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 4, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise4, updatetype, main4, 4, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+            ModulationUpdate(LevelEnvelopeMode, SustainDroop, OverSustainDroop, NoiseSustainDroop, updatetype, main5, 4, 'Set the Level Envelope Droop Rate (0 = fastest) - Droop adds an extra element to the Sustain of the standard ADSR curve');
+
+        else
+        if (Mode == _AM)
+        {
+            ModulationUpdate(AM_Mode, AM_SubHarmLevel, OverAM_SubHarmLevel, Dummy, updatetype, main6, 4, 'Set the Depth of the Sub-Harmonic Frequency Amplitude Modulation');
+            if (value4.innerHTML == 0)
+                value4.innerHTML = 'Off';
+            else
+                value4.innerHTML = value4.innerHTML/20 + '<br>dB';
+        }
+
+        else
+        if (Mode == _FM)
+        {
+            ModulationUpdate(FM_Mode, FM_SubHarmLevel, OverFM_SubHarmLevel, Dummy, updatetype, main7, 4, 'Set the Depth of the Sub-Harmonic Frequency Frequency Modulation');
+            if (value4.innerHTML == 0)
+                value4.innerHTML = 'Off';
+            else
+                value4.innerHTML = value4.innerHTML/10 + '<br>semitones';
+         }
+
+        else
+        if (Mode == _FreqEnvelope)
+        {
+            Update(S74, updatetype, main8, 4, ' ');
+            /*
+            Update(OffsetAmount, updatetype, main8, 4, 'Set the Maximum Rise or Fall in Pitch on a Keypress');
+            if (value4.innerHTML == 64)
+                value4.innerHTML = 'Off';
+            else
+                value4.innerHTML = value4.innerHTML - 64;
+            */
+        }
+
+        else
+        if (Mode == _Effects)
+            Update(ChorusFeedback, updatetype, main9, 4, 'Set the amount of Feedback from the Chorus Effect Output back to the Input');
+
+        else
+        if (Mode == _System)
+        {
+            Update(Synth, updatetype, main10, 4, 'Selection of Synthesised Sounds');
+            value4.innerHTML = (1.0 + (value4.innerHTML * Synth.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function Update5(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(TouchFreq, updatetype, main1, 5, 'Touch Sensitivity - Freq makes the note sharper during the attack phase if the key is hit faster');
+            if (value5.innerHTML == 0)
+                value5.innerHTML = 'Off';
+            else
+                value5.innerHTML = value5.innerHTML/100 + '<br>semitones';
+         }
+
+        else
+        if (Mode == _SynthParam)
+            Update(S15, updatetype, main2, 5, ' ');
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone5, Overtone14, Overtone8, Overtone9,
+                             Overtone3, Overtone6, Overtone9, Overtone12, Overtone15, Overtone18];
+            if (HarmonicGen.val <= 4)
+                LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 5, '-');
+            else
+                CoarseUpdate(OverTones[HarmonicGen.val], updatetype, main3, 5, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise5, updatetype, main4, 5, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+        {
+            ModulationUpdate(LevelEnvelopeMode, SustainDroopLevel, OverSustainDroopLevel, NoiseSustainDroopLevel, updatetype, main5, 5, 'Set the Level Envelope Droop Level as a percentage of initial Sustain Level (100% = no Droop)');
+            value5.innerHTML = (100 * (value5.innerHTML/127)).toFixed(0) + '%';
+        }
+
+        else
+        if (Mode == _AM)
+            ModulationUpdate(AM_Mode, AM_Attack, OverAM_Attack, Dummy, updatetype, main6, 5, 'Set the Rate of Attack of the Amplitude Modulation on a Keypress (0 = constant)');
+
+        else
+        if (Mode == _FM)
+            ModulationUpdate(FM_Mode, FM_Attack, OverFM_Attack, Dummy, updatetype, main7, 5, 'Set the Rate of Attack of the Frequency Modulation on a Keypress (0 = constant)');
+
+        else
+        if (Mode == _FreqEnvelope)
+            ModulationUpdate(FreqEnvelopeMode, OffsetAttack, OverFreqAttack, Dummy, updatetype, main8, 5, 'Set the Rate of Attack of the Rise in Pitch on a Keypress (0 = instantaneous)');
+
+        else
+        if (Mode == _Effects)
+            Update(ReverbNumberTaps, updatetype, main9, 5, 'Set the Number of Taps in the Reverb Effect Generator');
+
+        else
+        if (Mode == _System)
+        {
+            Update(Percussion, updatetype, main10, 5, 'Selection of Percussive Sounds');
+            value5.innerHTML = (1.0 + (value5.innerHTML * Percussion.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function Update6(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(TouchLevel, updatetype, main1, 6, 'Touch Sensitivity - Volume makes the note softer or louder by the speed of the key.  0 = off');
+            if (value6.innerHTML == 0)
+                value6.innerHTML = 'Off';
+            else
+                value6.innerHTML = '+/- ' + value6.innerHTML/10 + '<br> dB';
+        }
+
+        else
+        if (Mode == _SynthParam)
+            Update(S16, updatetype, main2, 6, ' ');
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone6, Overtone15, Overtone10, Overtone11,
+                             Overtone3, Overtone6, Overtone9, Overtone12, Overtone15, Overtone18];
+            if (HarmonicGen.val <= 4)
+                LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 6, '-');
+            else
+                FineUpdate(OverTones[HarmonicGen.val], updatetype, main3, 6, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise6, updatetype, main4, 6, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+            ModulationUpdate(LevelEnvelopeMode, Release, OverRelease, NoiseRelease, updatetype, main5, 6, 'Set the Level Envelope Release Time after Key release (0 = instantaneous)');
+
+        else
+        if (Mode == _AM)
+            ModulationUpdate(AM_Mode, AM_Decay, OverAM_Decay, Dummy, updatetype, main6, 6, 'Set the Rate of Decay of the Amplitude Modulation on a Keypress (0 = constant)');
+
+        else
+        if (Mode == _FM)
+            ModulationUpdate(FM_Mode, FM_Decay, OverFM_Decay, Dummy, updatetype, main7, 6, 'Set the Rate of Decay of the Frequency Modulation on a Keypress (0 = constant)');
+
+        else
+        if (Mode == _FreqEnvelope)
+        {
+            Update(OffsetAmount, updatetype, main8, 6, 'Set the Maximum Rise or Fall in Pitch on a Keypress');
+            if (value6.innerHTML == 64)
+                value6.innerHTML = 'Off';
+            else
+                value6.innerHTML = value6.innerHTML - 64;
+        }
+
+        else
+        if (Mode == _Effects)
+        {
+            Update(ReverbTapSpacing, updatetype, main9, 6, 'Set the Time in Milliseconds between the Equally Spaced Taps on the Reverb Effect Generator');
+            value6.innerHTML = 25 * value6.innerHTML + ' mS'
+        }
+
+        else
+        if (Mode == _System)
+        {
+            Update(UserBank1, updatetype, main10, 6, '128 Locations to Store your own Sounds');
+            value6.innerHTML = (1.0 + (value6.innerHTML * UserBank1.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function Update7(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(TouchAttack, updatetype, main1, 7, 'Touch Sensitivity - Attack reduces the attack time of the note if the key is hit faster.  0 = off, 127 = instant on for fastest presses');
+            if (value7.innerHTML == 0)
+                value7.innerHTML = 'Off';
+            else
+                value7.innerHTML = 'x ' + value7.innerHTML/10 + '<br>faster';
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Update(HeadPhones, updatetype, main2, 7, 'Set the volume of the Headphones (Duplicates front panel control)');
+            if ((!HeadPhones.en) || (HeadPhones.val < 3))
+                value7.innerHTML = '-∞ dB';
+            else
+            if (HeadPhones.val < 15)
+                value7.innerHTML = ((HeadPhones.val - 40) * 2).toFixed(1) + ' dB';// -∞dB to -52dB
+            else
+            if (HeadPhones.val < 30)
+                value7.innerHTML = ((HeadPhones.val - 65)).toFixed(1) + ' dB';    // -50 dB to -36dB
+            else
+                value7.innerHTML = ((HeadPhones.val - 100)/2).toFixed(1) + ' dB'; // -35dB to +13.5
+        }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone7, Overtone16, Overtone12, Overtone13,
+                             Overtone3, Overtone6, Overtone9, Overtone12, Overtone15, Overtone18];
+            LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 7, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise7, updatetype, main4, 7, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+            ShapeUpdate(LevelEnvelopeMode, AttackShape, Dummy, updatetype, main5, 7, _AttackShapeHelp);
+
+        else
+        if (Mode == _AM)
+            ModulationUpdate(AM_Mode, AM_Release, OverAM_Release, Dummy, updatetype, main6, 7, 'Set the Rate of Release of the Amplitude Modulation after a Key release (0 = constant)');
+
+        else
+        if (Mode == _FM)
+            ModulationUpdate(FM_Mode, FM_Release, OverFM_Release, Dummy, updatetype, main7, 7, 'Set the Rate of Release of the Frequency Modulation after a Key release (0 = constant)');
+
+        else
+        if (Mode == _FreqEnvelope)
+            ModulationUpdate(FreqEnvelopeMode, OffsetRelease, OverFreqRelease, Dummy, updatetype, main8, 7, 'Set the Rate of Release of the Rise in Pitch after a Key release (0 = instantaneous)');
+
+        else
+        if (Mode == _Effects)
+        {
+            Update(ReverbLevelSlope, updatetype, main9, 7, 'Set the Amplitude Slope of the Taps on the Reverb Effect Generator  (0 dB = all equal)');
+            value7.innerHTML = (value7.innerHTML - 64)/10 + '<br>dB';
+        }
+
+        else
+        if (Mode == _System)
+        {
+            Update(UserBank2, updatetype, main10, 7, '128 Locations to Store your own Sounds');
+            value7.innerHTML = (1.0 + (value7.innerHTML * UserBank2.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function Update8(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(PitchWheelSens, updatetype, main1, 8, 'Pitch Wheel Sensitivity sets the maximum frequency deviation of the pitch wheel.  Max of +/- 12.7 semitones bend');
+            if (value8.innerHTML == 0)
+                value8.innerHTML = 'Off';
+            else
+                value8.innerHTML = value8.innerHTML/10 + '<br>semitones';
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Update(Width, updatetype, main2, 8, 'Set the Width of the Output Stereo Image (Duplicates front panel control)');
+            if (value8.innerHTML == 0)
+                value8.innerHTML = 'Mono';
+            else
+            if (value8.innerHTML == 64)
+                value8.innerHTML = 'Normal';
+            else
+                value8.innerHTML = value8.innerHTML + '<br>';
+
+        }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone8, Overtone17, Overtone14, Overtone15,
+                             Overtone4, Overtone7, Overtone10, Overtone13, Overtone16, Overtone19];
+            if (HarmonicGen.val <= 4)
+                LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 8, '-');
+            else
+                CoarseUpdate(OverTones[HarmonicGen.val], updatetype, main3, 8, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise8, updatetype, main4, 8, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+        {
+            if (LevelEnvelopeMode.val <= _FundOnly) 
+                ShapeUpdate(LevelEnvelopeMode, DecayShape, Dummy, updatetype, main5, 8, _DecayShapeHelp);
+            else
+            if (LevelEnvelopeMode.val == _NoiseADSR)
+            {
+                Update(NoiseDelay, updatetype, main5, 8, _DelayHelp);
+                value8.innerHTML = value8.innerHTML + ' mS';
+            }
+            else
+            {
+                Update(OverDelay, updatetype, main5, 8, _DelayHelp);
+                value8.innerHTML = value8.innerHTML + ' mS';
+            }
+        }
+
+        else
+        if (Mode == _AM)
+             ShapeUpdate(AM_Mode, AM_AttackShape, Dummy, updatetype, main6, 8, _AttackShapeHelp);
+
+        else
+        if (Mode == _FM)
+             ShapeUpdate(FM_Mode, FM_AttackShape, Dummy, updatetype, main7, 8, _AttackShapeHelp);
+
+        else
+        if (Mode == _FreqEnvelope)
+        {
+            Update(S78, updatetype, main8, 8, ' ');
+            //ShapeUpdate(FreqEnvelopeMode, OffsetAttackShape, updatetype, main8, 8, _AttackShapeHelp);
+        }
+
+        else
+        if (Mode == _Effects)
+            Update(ReverbFeedback, updatetype, main9, 8, 'Set the amount of Feedback from the Reverb Effect Output back to the Input');
+
+        else
+        if (Mode == _System)
+        {
+            Update(UserBank3, updatetype, main10, 8, '128 Locations to Store your own Sounds');
+            value8.innerHTML = (1.0 + (value8.innerHTML * UserBank3.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function Update9(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            var ModTargets = ['Off','Volume','Pan','Overtone Freq Tilt','Noise Volume','Attack','Release',
+                              'AM_Fixed Level','AM_Sub Level','FM_Fixed Level','FM_Sub Level',
+                              'Chorus Level','Chorus Feedback','Reverb Level','Reverb Feedback','Off'];
+            Update(ModWheelTarg, updatetype, main1, 9, 'Modulation Wheel Target sets the parameter which is altered by the Modulation Wheel');
+            value9.innerHTML = ModTargets[(ModWheelTarg.val * ModWheelTarg.en) >> 3];
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Update(Pan, updatetype, main2, 9, 'Pan the Output from Left to Right (Duplicates front panel control)');
+            if (value9.innerHTML == 64)
+                value9.innerHTML = 'Centre';
+            else
+            if (value9.innerHTML < 64)
+                value9.innerHTML = (64 - value9.innerHTML)/5 + 'dB<br>Left';
+            else
+                value9.innerHTML = (value9.innerHTML - 64)/5 + 'dB<br>Right';
+        }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone9, Overtone18, Overtone16, Overtone17,
+                             Overtone4, Overtone7, Overtone10, Overtone13, Overtone16, Overtone19];
+            if (HarmonicGen.val <= 4)
+                LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 9, '-');
+            else
+                FineUpdate(OverTones[HarmonicGen.val], updatetype, main3, 9, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise9, updatetype, main4, 9, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+            ShapeUpdate(LevelEnvelopeMode, SustainDroopShape, Dummy, updatetype, main5, 9, _DecayShapeHelp);
+
+        else
+        if (Mode == _AM)
+            ShapeUpdate(AM_Mode, AM_DecayShape, Dummy, updatetype, main6, 9, _DecayShapeHelp);
+
+        else
+        if (Mode == _FM)
+            ShapeUpdate(FM_Mode, FM_DecayShape, Dummy, updatetype, main7, 9, _DecayShapeHelp);
+
+        else
+        if (Mode == _FreqEnvelope)
+        {
+            Update(S79, updatetype, main8, 9, ' ');
+            //ShapeUpdate(FreqEnvelopeMode, OffsetDecayShape, updatetype, main8, 9, _DecayShapeHelp);
+        }
+
+        else
+        if (Mode == _Effects)
+            Update(S89, updatetype, main9, 9, ' ');
+
+        else
+        if (Mode == _System)
+        {
+            Update(UserBank4, updatetype, main10, 9, '128 Locations to Store your own Sounds');
+            value9.innerHTML = (1.0 + (value9.innerHTML * UserBank4.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function Update10(updatetype)
+    {
+        if (Mode == _Keyboard)
+        {
+            Update(ModWheelSens, updatetype, main1, 10, 'Modulation Wheel Sensitivity sets the maximum depth of modulation of the selected target parameter.  0 = off, 127 = max');
+            if (value10.innerHTML == 0)
+                value10.innerHTML = 'Off';
+            else
+                value10.innerHTML = value10.innerHTML + '<br> units';
+        }
+
+        else
+        if (Mode == _SynthParam)
+        {
+            Update(Volume, updatetype, main2, 10, 'Set the Output Level (Duplicates front panel control)');
+            
+            if (Volume.en)
+                value10.innerHTML = MIDI2VoldB(Volume.val)
+            else
+                value10.innerHTML = '-∞ dB';
+         }
+
+        else
+        if (Mode == _Overtones)
+        {
+            var OverTones = [Dummy, Overtone10, Overtone19, Overtone18, Overtone19,
+                             Overtone4, Overtone7, Overtone10, Overtone13, Overtone16, Overtone19];
+            LevelUpdate(OverTones[HarmonicGen.val], updatetype, main3, 10, '-');
+        }
+
+        else
+        if (Mode == _NoiseGens)
+            LevelUpdate(Noise10, updatetype, main4, 10, '-');
+
+        else
+        if (Mode == _LevelEnvelope)
+            ShapeUpdate(LevelEnvelopeMode, ReleaseShape, Dummy, updatetype, main5, 10, _ReleaseShapeHelp);
+
+        else
+        if (Mode == _AM)
+            ShapeUpdate(AM_Mode, AM_ReleaseShape, Dummy, updatetype, main6, 10, _ReleaseShapeHelp);
+
+        else
+        if (Mode == _FM)
+            ShapeUpdate(FM_Mode, FM_ReleaseShape, Dummy, updatetype, main7, 10, _ReleaseShapeHelp);
+
+        else
+        if (Mode == _FreqEnvelope)
+        {
+            Update(S80, updatetype, main8, 10, ' ');
+            //ShapeUpdate(FreqEnvelopeMode, OffsetReleaseShape, updatetype, main8, 10, _ReleaseShapeHelp);
+        }
+
+        else
+        if (Mode == _Effects)
+        {
+            Update(Quantisation, updatetype, main9, 10, 'Set the Number of Active Bits in the output signal');
+            value10.innerHTML = Math.round(value10.innerHTML/4) + '<br>bits';
+        }
+
+        else
+        if (Mode == _System)
+        {
+            Update(UserBank5, updatetype, main10, 10, '128 Locations to Store your own Sounds');
+            value10.innerHTML = (1.0 + (value10.innerHTML * UserBank5.max >> 7)).toFixed(0);
+        } 
+    }
+
+
+
+    function UpdateAll()
+    {
+        Update1(2);
+        Update2(2);
+        Update3(2);
+        Update4(2);
+        Update5(2);
+        Update6(2);
+        Update7(2);
+        Update8(2);
+        Update9(2);
+        Update10(2);
+    }
+
+
+
+    function Title(words)
+    {
+        if (MIDISource.val <= 5)
+            head.innerHTML = 'Keyboard ' + MIDISource.val + ' : ' + words;
+        else
+        if (MIDISource.val >= 8)
+            head.innerHTML = 'Kybd ' + (MIDISource.val & 7) + ' Low : ' + words;
+        else
+            head.innerHTML = 'Sequencer : ' + MIDISource.val + words;
+    }
+
+
+
+    function Help(words)
+    {
+        if (words != '-') help.innerHTML = '<span class = help>' + words + '</span>';
+    }
+
+
+
+    function MoreHelp()
+    {
+        if (Morehelp)
+        {
+            help.style.height = '3vw';
+            help.style.textAlign = 'center';
+            Morehelp = 0;
+            setcont.style.opacity = 1;
+            undo.style.opacity = 1;
+                 if (Mode == _Keyboard) Keyboard();
+            else if (Mode == _SynthParam) SynthParam();
+            else if (Mode == _Overtones) Overtones();
+            else if (Mode == _NoiseGens) NoiseGens()
+            else if (Mode == _LevelEnvelope) LevelEnvelope();
+            else if (Mode == _AM) AM();
+            else if (Mode == _FM) FM();
+            else if (Mode == _FreqEnvelope) FreqEnvelope();
+            else if (Mode == _Effects) Effects();
+            else if (Mode == _System) System();
+        }
+        else
+        if (Mode != _Overview)
+        {
+            setcont.style.opacity = 0;
+            undo.style.opacity = 0;
+            help.style.height = '44vw';
+            help.style.textAlign = 'left';
+            help.innerHTML = '<span class = help>' +
+            "The InPoSe Sound Synthesister consists of an array of several thousand sinewave oscillators, each with it's own extended functionality Level Envelope generator, together with individual amplitude (AM) and frequency (FM) modulation capabilities, each with their own simpler envelope generator.  A selection of Noise Generators with frequency shaping can be added to these sinewaves to help create more natural sounds.<br><br>The synthesiser is normally driven by a USB equipped MIDI keyboard.<br><br>To begin using the synthesiser try loading one of the saved sounds using the Load/Store button.  Changing most parameters is similar to other synthesisers, but there are a few key differences.<br><br>Firstly when altering the envelope of a signal, you need to decide whether to alter just the fundamental frequency sinewave, just the overtones, or the fundamental and the overtones.  Different buttons are provided for each of these selections.<br><br>You can also make all the overtones have the same envelope or modulation, or set it such that those near to the fundamental frequency include more of the envelope or modulation of the fundamental, whilst those of much higher pitch have a quite distinct modulation.  Another option is to 'bend' the frequencies of the fundamental, overtones or both using the Freq Envelope button.<br><br>The most complicated menu is the OverTone Structure page.  If you want all overtones to be harmonically related, you can use any of the leftmost four buttons to alter the levels of each overtone.  For non-harmonically related overtones, use the six rightmost buttons where the level and coarse and fine frequency control of each of up to 18 overtones is provided.<br><br>The Load/Store button allows a large number of sounds to be stored, including 12 presets which provide quick access for live use.<br><br>Click/touch this window again to close it."
+            + '</span>';
+            Morehelp = 1;
+        }
+    }
+
+
+
+    function SetEvenHarmonics(num)
+    {
+        function SendOverObjectEn(data)
+        {
+            data.en = num;
+            SendDataByID(data);
+         }
+
+        SendOverObjectEn(Overtone2);
+        SendOverObjectEn(Overtone4);
+        SendOverObjectEn(Overtone6);
+        SendOverObjectEn(Overtone8);
+        SendOverObjectEn(Overtone10);
+        SendOverObjectEn(Overtone12);
+        SendOverObjectEn(Overtone14);
+        SendOverObjectEn(Overtone16);
+        SendOverObjectEn(Overtone18);
+    }
+
+
+
+    function SetOddHarmonics(num)
+    {
+        function SendOverObjectEn(data)
+        {
+            data.en = num;
+            SendDataByID(data);
+        }
+
+        SendOverObjectEn(Overtone3);
+        SendOverObjectEn(Overtone5);
+        SendOverObjectEn(Overtone7);
+        SendOverObjectEn(Overtone9);
+        SendOverObjectEn(Overtone11);
+        SendOverObjectEn(Overtone13);
+        SendOverObjectEn(Overtone15);
+        SendOverObjectEn(Overtone17);
+        SendOverObjectEn(Overtone19);
+    }
+
+
+
+    function SetOpacity(sub, num)
+    {
+        Databuts[sub].style.opacity = num;
+        Values[sub].style.opacity = num;
+        Sliders[sub].style.opacity = num;
+        Slibuts[sub].style.opacity = num;
+    }
+
+
+
+    function NineColumns(num)
+    {
+        for (i = 1; i <= 9; i++)
+            SetOpacity(i, num);
+        SetOpacity(10, 1);
+
+        if (num == 1)
+            data10.innerHTML = 'User Bank 5';
+        else
+            data10.innerHTML = 'Recovery Bank';
+
+        Help(_SystemHelp[harmtype]);
+    }
+
+
+
+    function TenColumns(num)
+    {
+        for (i = 1; i <= 10; i++)
+            SetOpacity(i, num);
+        Help(_SystemHelp[harmtype]);
+    }
+
+
+
+    function ButON(data)
+    {
+        data.style.backgroundColor = _butON;
+    }
+
+
+
+    function MainButOff(words)
+    {
+        for (i = 1; i <= 10; i++)
+            Mainbuts[i].style.backgroundColor = _mainbutOFF;
+        Help(words);
+    }
+
+
+
+    function DataButsOff()
+    {
+        for (i = 1; i <= 10; i++)
+            Databuts[i].style.backgroundColor = _databutOFF;
+    }
+
+
+
+    function DataButOnOff(pos, en)
+    {
+        Databuts[pos].style.backgroundColor = _butONOFF[en];
+    }
+
+
+
+    function HarmButON(pos)
+    {
+        Harmbuts[pos].style.backgroundColor = _butON;
+    }
+
+
+
+    function SetHarmVisibility()
+    {
+        for (i = 1; i <= 10; i++)
+        {
+            Harmbuts[i].style.height = '6vw';
+            Harmbuts[i].style.backgroundColor = _harmbutOFF;
+            if (Harmbuts[i].innerHTML != ' ')
+                Harmbuts[i].style.opacity = 1;
+            else
+                Harmbuts[i].style.opacity = 0;
+        }
+    }
+
+
+
+    function SetHarmButtons(h1,h2,h3,h4,h5,h6,h7,h8,h9,h10)
+    {
+        harm1.innerHTML  = h1;
+        harm2.innerHTML  = h2;
+        harm3.innerHTML  = h3;
+        harm4.innerHTML  = h4;
+        harm5.innerHTML  = h5;
+        harm6.innerHTML  = h6;
+        harm7.innerHTML  = h7;
+        harm8.innerHTML  = h8;
+        harm9.innerHTML  = h9;
+        harm10.innerHTML  = h10;
+        SetHarmVisibility();
+    }
+
+
+
+    function AMFMHarmButtons()
+    {
+        SetHarmButtons('Linear Modulation','Log Modulation',' ','Fund & Overtones','Fund Only',
+                       'Overtones All Same','Overtones Iterate',' ',' ','Copy Fund to Overtones');
+    }
+
+
+
+    function NoiseHarmButtons()
+    {
+        SetHarmButtons('Previous',' ','Noise<br>' + NoiseNumber.val,'Triangle<br>' + TriangleNumber.val + '%',
+                       'Square<br>' + SquareNumber.val + '%',
+                       'Chirp<br>' + ChirpNumber.val,'Sinewaves','Sample<br>' + SampleNumber.val,' ','Next');
+   }
+
+
+
+    function DecNoise(data)
+    {
+        if (data.val > data.min)
+        {
+            Stack.push(data.val);
+            Stack.push(data.id);
+            data.val--;
+            SendDataByID(data);
+        }
+    }
+
+
+
+    function IncNoise(data)
+    {
+        if (data.val < data.max)
+        {
+            Stack.push(data.val);
+            Stack.push(data.id);
+            data.val++;
+            SendDataByID(data);
+        }
+    }
+
+
+
+    function SetPresetButtons()
+    {
+        for (i = 1; i <= 10; i++)
+        {
+            Harmbuts[i].innerHTML  = 'Preset<br>' + i;
+            Harmbuts[i].style.opacity = 1;
+            Harmbuts[i].style.height = '6vw';
+            Harmbuts[i].style.backgroundColor = _harmbutOFF;
+        }
+    }
+
+
+
+    function Initialise()
+    {
+        FullScreen = 0;
+        Mobile = ((navigator.appVersion.indexOf("Android")!=-1) || (navigator.platform.indexOf("iP")!=-1));
+        //var Firefox = (navigator.userAgent.indexOf('Firefox') != -1 );
+        //var Safari =  (navigator.userAgent.indexOf('Safari') != -1);
+        //var Chrome =  (navigator.userAgent.indexOf('Chrome') != -1 );
+        //var MSoft =   (navigator.userAgent.indexOf('MSIE') != -1 );
+        //var Opera =   ((navigator.userAgent.indexOf('Opera') || (navigator.userAgent.indexOf('OPR')) != -1 ));
+
+
+        /*
+        if (Mobile)
+        {
+        }
+
+        else
+        if (Opera) // put first as otherwise others trigger as valid
+            for (i = 1; i <= 10; i++)
+            {
+                Slis[i].style.width = '1.7vw';
+                Slis[i].style.marginLeft = '7.3vw';
+            }
+        else
+        if (Firefox)
+            for (i = 1; i <= 10; i++)
+            {
+                Slis[i].style.width = '1.7vw';
+                Slis[i].style.marginLeft = '7.3vw';
+            }
+
+        else
+        if (Chrome)
+            for (i = 1; i <= 10; i++)
+            {
+                Slis[i].style.width = '1.9vw';
+                Slis[i].style.marginLeft = '7.1vw';
+            }
+        */
+
+        if (!Mobile)
+            Start();
+    }
+
+
+
+    function Start()
+    {
+        if (Mode == 0)
+        {
+            head.style.height = '3.75vw';
+
+            if (Mobile)
+            {
+                OpenFullscreen();
+                exit.innerHTML = 'Exit';
+            }
+            else
+                exit.innerHTML = 'FullScreen';
+
+            help.style.opacity = 1;
+            setcont.style.opacity = 1;
+            undo.style.opacity = 1;
+            exit.style.opacity = 1;
+            copy.style.opacity = 1;
+            for (i = 1; i <= 10; i++)
+            {
+                Mainbuts[i].style.opacity = 1;
+                Slis[i].style.opacity = 1;
+                SetOpacity(i, 1);
+            }
+
+            Mode = _Keyboard;
+            Keyboard();
+        }
+    }
+
+
+
+    function Exit()
+    {
+        if (OverlayMode)
+            CloseOverlay();
+        else
+        if (FullScreen)
+        {
+            CloseFullscreen();
+            if (Mobile)
+                document.location.reload();
+        }
+        else
+            OpenFullscreen();
+    }
+
+
+
+    function Mute()
+    {
+        if (Mute.val == 1)
+        {
+            Mute.val = 0;
+            copy.innerHTML = 'Mute InPoSe Sound<br>Synthesiser (c)2019';
+            copy.style.backgroundColor = '#A00000';
+        }
+        else
+        {
+            Mute.val = 1;
+            copy.innerHTML = 'Un-Mute InPoSe Sound<br>Synthesiser (c)2019';
+            copy.style.backgroundColor = '#FF0000';
+        }
+        SendDataByID(Mute);
+    }
+
+
+
+    function OpenFullscreen()
+    {
+        FullScreen = 1;
+        if (Mobile)
+            exit.innerHTML = 'Exit';
+        else
+            exit.innerHTML = 'Normal';
+        var elem;
+        elem = document.getElementById('mainscreen');
+        if (elem.requestFullscreen)
+            elem.requestFullscreen();
+        else
+        if (elem.mozRequestFullScreen) // Firefox
+            elem.mozRequestFullScreen();
+        else
+        if (elem.webkitRequestFullscreen) // Chrome, Safari and Opera
+            elem.webkitRequestFullscreen();
+        else
+        if (elem.msRequestFullscreen) // IE/Edge
+            elem.msRequestFullscreen();
+    }
+
+
+
+    function CloseFullscreen()
+    {
+        FullScreen = 0;
+        if (Mobile)
+            exit.innerHTML = 'Exit';
+        else
+            exit.innerHTML = 'FullScreen';
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+        else
+        if (document.mozCancelFullScreen)
+            document.mozCancelFullScreen();
+        else
+        if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+        else
+        if (document.msExitFullscreen)
+            document.msExitFullscreen();
+    }
+
+
+
+    function SetController()
+    {
+        if (Mode != _Overview)
+        {
+            if (SaveDest == 0)
+                Help('Select any slider controlled parameter you wish to assign to a slider or rotary on currently selected MIDI controller');
+            else
+                Help('Now adjust any slider or rotary on your MIDI controller to assign it to the highlighted slider below');
+        }
+    }
+
+
+
+    function Undo()
+    {
+        var id = Stack.pop();
+        var val = Stack.pop();
+
+        if (Stack.length == 0)
+        {
+        }
+
+        else
+        if ((id >= 201) && (id <= 219))
+        {
+            IDs[id].val = val;
+            IDs[id].fine = Stack.pop();
+            IDs[id].val = Stack.pop();
+
+            Overtones();
+
+            if (id == 201)
+                ButON(data1);
+            else
+            if (HarmonicGen.val == 1)
+            {
+                if (id <= 210)
+                    DataButOnOff(id - 200, 1);
+            }
+            else
+            if (HarmonicGen.val == 2)
+            {
+                if (id >= 211)
+                    DataButOnOff(id - 209, 1);
+            }
+            else
+            if (HarmonicGen.val == 3)
+            {
+                if ((id & 1) == 0)
+                    DataButOnOff((id - 198)/2, 1);
+            }
+            else
+            if (HarmonicGen.val == 4)
+            {
+                if ((id & 1) == 1)
+                    DataButOnOff((id - 199)/2, 1);
+            }
+            else
+            {
+                Harmbut(Math.trunc((id - 187)/3));
+                i = (((id - 202) % 3) + 1) * 3;
+                DataButOnOff(i-1, 1);
+                DataButOnOff(i, 1);
+                DataButOnOff(i+1, 1);
+            }
+
+            //SendOverData(id, en, val, coarse, fine, 0);
+            SendDataByID(IDs[id]);
+        }
+
+        else
+        {
+            IDs[id].val = val;
+
+                 if (id <= 10)  Keyboard();
+            else if (id <= 20)  SynthParam();
+            else if (id <= 30)  {}
+            else if (id <= 40)  NoiseGens();
+            else if (id <= 50)  LevelEnvelope();
+            else if (id <= 60)  AM();
+            else if (id <= 70)  FM();
+            else if (id <= 80)  FreqEnvelope();
+            else if (id <= 90)  Effects();
+            else if (id <= 130) {}
+            else
+            if (id <= 140)
+            {
+                NoiseGenMode.val = id - 130;
+                NoiseGens();
+            }
+            else if (id <= 150) LevelEnvelope();
+            else if (id <= 160) AM();
+            else if (id <= 170) FM();
+            else if (id <= 180) FreqEnvelope();
+
+            if ((id <= 130) || (id >= 150))
+                DataButOnOff((id - 1) % 10 + 1, 1);
+
+            SendData(id, 1, val, 0);
+
+            Help('Undoing previous actions one step at a time');
+        }
+    }
+
+
+
+    function SaveSound(bank, name)
+    {
+        SoundSaved = 1;
+    }
+
+
+
+    function RenameSound(bank, num, name)
+    {
+        SoundSaved = 1;
+    }
+
+
+
+    function SavePreset(num)
+    {
+
+
+    }
+
+
+
+    function red(msg)
+    {
+        return('<font color=red> ' + msg + '</font>');
+    }
+        
+    
+
+    function UpdateSendObject(data, sourcedata)
+    {
+        Stack.push(data.val);
+        Stack.push(data.id);
+        data.val = sourcedata.val;
+        SendDataByID(data);
+    }
+
+
+
+// MERGE ALL BELOW INTO ONE FUNCTION !
+    function SendDataByID(data)
+    {
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange
+              = function()
+                {
+                    if ((this.readyState == 4) && (this.status == 200))
+                        //copy.innerHTML = this.responseText;
+                        ParseData(this.responseXML.split(','));
+                };
+
+        xhttp.open('POST', 'SendData.asp', true);
+        //xhttp.open('PUT', 'SendData.asp', true);
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        if ((data.id >= 201) && (data.id <= 219))
+        {
+            if (data.en)
+                xhttp.send('D=' + ((data.coarse << 24) + ((data.fine & 127) << 16) + (data.id << 8) + (data.val << 0)) + ' ');
+            else
+                xhttp.send('D=' + ((data.coarse << 24) + ((data.fine & 127) << 16) + (data.id << 8) + (data.off << 0)) + ' ');
+            }
+        else
+        {
+            if (data.en)
+                xhttp.send('D=' + ((data.id << 8) + (data.val << 0)) + ' ');
+            else
+                xhttp.send('D=' + ((data.id << 8) + (data.off << 0)) + ' ');
+        }
+
+    }
+
+
+
+    function ParseData(data)
+    {
+        if (data[0] < 200)
+        {
+            IDs[data[0] + 1].val = data[1];
+            IDs[data[0] + 2].val = data[2];
+            IDs[data[0] + 3].val = data[3];
+            IDs[data[0] + 4].val = data[4];
+            IDs[data[0] + 5].val = data[5];
+            IDs[data[0] + 6].val = data[6];
+            IDs[data[0] + 7].val = data[7];
+            IDs[data[0] + 8].val = data[8];
+            IDs[data[0] + 9].val = data[9];
+            IDs[data[0] + 10].val = data[10];
+        }
+
+        else
+        if (data[0] == 200)
+        {
+            Overtone1.val = data[1]; Overtone1.coarse = data[2]; Overtone1.fine = data[3];
+            Overtone2.val = data[4]; Overtone2.coarse = data[5]; Overtone2.fine = data[6];
+            Overtone3.val = data[7]; Overtone3.coarse = data[8]; Overtone3.fine = data[9];
+            Overtone4.val = data[10]; Overtone4.coarse = data[11]; Overtone4.fine = data[12];
+            Overtone5.val = data[13]; Overtone5.coarse = data[14]; Overtone5.fine = data[15];
+            Overtone6.val = data[16]; Overtone6.coarse = data[17]; Overtone6.fine = data[18];
+            Overtone7.val = data[19]; Overtone7.coarse = data[20]; Overtone7.fine = data[21];
+            Overtone8.val = data[22]; Overtone8.coarse = data[23]; Overtone8.fine = data[24];
+            Overtone9.val = data[25]; Overtone9.coarse = data[26]; Overtone9.fine = data[27];
+            Overtone10.val = data[28]; Overtone10.coarse = data[29]; Overtone10.fine = data[30];
+            Overtone11.val = data[31]; Overtone11.coarse = data[32]; Overtone11.fine = data[33];
+            Overtone12.val = data[34]; Overtone12.coarse = data[35]; Overtone12.fine = data[36];
+            Overtone13.val = data[37]; Overtone13.coarse = data[38]; Overtone13.fine = data[39];
+            Overtone14.val = data[40]; Overtone14.coarse = data[41]; Overtone14.fine = data[42];
+            Overtone15.val = data[43]; Overtone15.coarse = data[44]; Overtone15.fine = data[45];
+            Overtone16.val = data[46]; Overtone16.coarse = data[47]; Overtone16.fine = data[48];
+            Overtone17.val = data[49]; Overtone17.coarse = data[50]; Overtone17.fine = data[51];
+            Overtone18.val = data[52]; Overtone19.coarse = data[53]; Overtone18.fine = data[54];
+            Overtone19.val = data[55]; Overtone19.coarse = data[56]; Overtone19.fine = data[57];
+        }
+        else
+        if (data[0] == 230)
+        {
+            Organ.val = data[1]; Organ.max = data[2];
+            Piano.val = data[3]; Piano.max = data[4];
+            OtherInsts.val = data[5]; OtherInsts.max = data[6];
+            Synth.val = data[7]; Synth.max = data[8];
+            Percussion.val = data[9]; Percussion.max = data[10];
+            UserBank1.val = data[11]; UserBank1.max = data[12];
+            UserBank2.val = data[13]; UserBank1.max = data[14];
+            UserBank3.val = data[15]; UserBank1.max = data[16];
+            UserBank4.val = data[17]; UserBank1.max = data[18];
+            UserBank5.val = data[19]; UserBank1.max = data[20];        
+        }
+        UpdateAll();
+    }
+
+
+
+    // GRAPHING
+    var OverlayMode = 0;
+
+    var ctx;
+    var Ymax;
+    var X;
+    var Y;
+    var Xc;
+    var Yc;
+
+
+    function getCursorPosition(canvas, event)
+    {
+        const rect = canvas.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
+        //Title("x: " + x + " y: " + y);
+
+        if (x > canvas.width * 0.75)
+        {
+            if (y < canvas.height * 0.4)
+                Harmbut(_FundOver);
+            else
+            if (y > canvas.height * 0.6)
+                Harmbut(_NoiseADSR);
+            else
+                Harmbut(_OverSame);
+        }
+        else
+            CloseOverlay();
+    }
+
+
+
+    function InitOverlay()
+    {
+        OverlayMode = 1;
+        graph.style.display = 'block';
+        ctx = canvas.getContext('2d');
+
+        canvas.addEventListener('mousedown', function(ev) {getCursorPosition(canvas, ev)})
+
+        canvas.style.width ='99%';
+        canvas.style.height='96%';
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        ctx.clearRect(0, 0, canvas.width , canvas.height);
+        ctx.font = '15px Arial';
+        ctx.fillStyle = '#000000';
+        ctx.textAlign = 'end';
+        ctx.fillText('Horz and Vert scales are Linear.  Values are approximate with levels at maximum', canvas.width - 15, 15);
+        ctx.fillText('Click/Touch graph or Exit button to access buttons underneath', canvas.width - 15, 35);
+        ctx.fillText('Black is Fundamental', canvas.width - 15, 55);
+        ctx.fillStyle = '#000080';
+        ctx.fillText('Blue is Highest Overtone', canvas.width - 15, 75);
+        ctx.fillStyle = '#C00000';
+        ctx.fillText('Red is Selected Noise', canvas.width - 15, 95);
+
+        ctx.strokeStyle = '#000000';
+        ctx.beginPath();
+        Yzero = canvas.height - 4;
+        Ymax = 15;
+        X = 10;
+        ctx.moveTo(X, Yzero);
+    }
+
+
+
+    function Overlay(id, id2, id3) // Level Envelope
+    {
+        InitOverlay();
+
+        // Fundamental
+        X = X * 1 + IDs[id].val * 1;
+        Yc = 128 - IDs[id+6].val;
+        ctx.quadraticCurveTo(X, Yc, X, Ymax);
+
+        X = X * 1 + IDs[id+1].val * 1;
+        Y = Yzero - (Yzero - Ymax) * IDs[id+2].val / 128;
+        Xc = X * 1 - (128 - IDs[id+7].val) * IDs[id+1].val / 128;
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        X = X * 1 + IDs[id+3].val * 1;
+        Y = Yzero - (Yzero - Ymax) * IDs[id+2].val * IDs[id+4].val / 16384;
+        Xc = X * 1 - (128 - IDs[id+8].val) * IDs[id+3].val / 128;
+
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([3, 3]);
+        ctx.moveTo(X, Y);
+        X = canvas.width/2;
+        ctx.lineTo(X, Y);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([]);
+        ctx.moveTo(X, Y);
+
+        X = X * 1 + IDs[id+5].val * 3;
+        Y = Yzero;
+        Xc = X * 1 - (128 - IDs[id+9].val) * IDs[id+5].val / 128;
+        Yc = Y;
+        ctx.quadraticCurveTo(Xc, Yc, X, Y);
+        ctx.stroke();
+        X = X * 1 + IDs[id].val * 1;
+        Yc = 128 - IDs[id+6].val;
+        ctx.quadraticCurveTo(X, Yc, X, Ymax);
+
+        // Overtone
+        Yzero = Yzero + 2;
+        Ymax = Ymax - 2;
+        ctx.strokeStyle = '#000080';
+        ctx.beginPath();
+        X = 10 * 1 + IDs[id2 + 7].val / 2;
+        ctx.moveTo(X, Yzero);
+
+        X = X * 1 + IDs[id2].val * 1;
+        Yc = 128 - IDs[id+6].val;
+        ctx.quadraticCurveTo(X, Yc, X, Ymax);
+
+        X = X * 1 + IDs[id2+1].val * 1;
+        Y = Yzero - (Yzero - Ymax) * IDs[id2+2].val / 128;
+        Xc = X * 1 - (128 - IDs[id+7].val) * IDs[id2+1].val / 128;
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        X = X * 1 + IDs[id+3].val * 1;
+        Y = Yzero - (Yzero - Ymax) * IDs[id2+2].val * IDs[id2+4].val / 16384;
+        Xc = X * 1 - (128 - IDs[id+8].val) * IDs[id+3].val / 128;
+
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([3, 3]);
+        ctx.moveTo(X, Y);
+        X = canvas.width/2 + IDs[id2 + 7].val / 2;
+        ctx.lineTo(X, Y);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([]);
+        ctx.moveTo(X, Y);
+
+        X = X * 1 + IDs[id2+5].val * 3;
+        Xc = X * 1 - (128 - IDs[id+9].val) * IDs[id2+5].val / 128;
+        ctx.quadraticCurveTo(Xc, Yzero, X, Yzero);
+        ctx.stroke();
+
+         // Noise
+        Yzero = Yzero + 2;
+        Ymax = Ymax - 2;
+        ctx.strokeStyle = '#C00000';
+        ctx.beginPath();
+        X = 10;
+        ctx.moveTo(X, Yzero);
+
+        X = X * 1 + IDs[id3].val * 1;
+        Yc = 128 - IDs[id3+6].val;
+        ctx.quadraticCurveTo(X, Yc, X, Ymax);
+
+        X = X * 1 + IDs[id3+1].val * 1;
+        Y = Yzero - (Yzero - Ymax) * IDs[id3+2].val / 128;
+        Xc = X * 1 - (128 - IDs[id3+7].val) * IDs[id3+1].val / 128;
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        X = X * 1 + IDs[id3+3].val * 1;
+        Y = Yzero - (Yzero - Ymax) * IDs[id3+2].val * IDs[id3+4].val / 16384;
+        Xc = X * 1 - (128 - IDs[id3+8].val) * IDs[id3+3].val / 128;
+
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([3, 3]);
+        ctx.moveTo(X, Y);
+        X = canvas.width/2;
+        ctx.lineTo(X, Y);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([]);
+        ctx.moveTo(X, Y);
+
+        X = X * 1 + IDs[id3+5].val * 3;
+        Xc = X * 1 - (128 - IDs[id3+9].val) * IDs[id3+5].val / 128;
+        ctx.quadraticCurveTo(Xc, Yzero, X, Yzero);
+        ctx.stroke();
+    }
+
+
+
+    function Overlay2(id) // AM, FM
+    {
+       OverlayMode = 1;
+        graph.style.display = 'block';
+        ctx = canvas.getContext('2d');
+
+        canvas.addEventListener('mousedown', function(ev) {getCursorPosition(canvas, ev)})
+
+        canvas.style.width ='99%';
+        canvas.style.height='96%';
+        canvas.width  = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        ctx.clearRect(0, 0, canvas.width , canvas.height);
+        ctx.font = '15px Arial';
+        ctx.fillStyle = '#000000';
+        ctx.textAlign = 'end';
+        ctx.fillText('Horz and Vert scales are Linear.  Values are approximate with levels at maximum', canvas.width - 15, 15);
+        ctx.fillText('Click/Touch graph or Exit button to access buttons underneath', canvas.width - 15, 35);
+        ctx.fillText('Black is Fundamental', canvas.width - 15, 55);
+        ctx.fillStyle = '#000080';
+        ctx.fillText('Blue is Highest Overtone', canvas.width - 15, 75);
+
+        ctx.strokeStyle = '#000000';
+        ctx.beginPath();
+        Yzero = canvas.height - 4;
+        Ymax = 15;
+        X = 10;
+        ctx.moveTo(X, Yzero);
+        X = X * 1 + IDs[id].val * 1;
+        Yc = 128 - IDs[id+3].val;
+        ctx.quadraticCurveTo(X, Yc, X, Ymax);
+
+        X = X * 1 + IDs[id+1].val * 1;
+        Y = Yzero - (Yzero - Ymax) * 0.25;
+        Xc = X * 1 - (128 - IDs[id+4].val) * IDs[id+1].val / 128;
+
+        ctx.quadraticCurveTo(Xc, Y, X, Y);
+
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([3, 3]);
+        ctx.moveTo(X, Y);
+        X = canvas.width/2;
+        ctx.lineTo(X, Y);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.setLineDash([]);
+        ctx.moveTo(X, Y);
+
+        X = X * 1 + IDs[id+2].val * 3;
+        Xc = X * 1 - (128 - IDs[id+5].val) * IDs[id+2].val / 128;
+        ctx.quadraticCurveTo(Xc, Yzero, X, Yzero);
+        ctx.stroke();
+    }
+
+
+
+    function CloseOverlay()
+    {
+        OverlayMode = 0;
+        graph.style.display = 'none';
+     }
+</script>
+</body>
+</html>
